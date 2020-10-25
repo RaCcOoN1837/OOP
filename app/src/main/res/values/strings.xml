@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">My List</string>
+    <string name="my_list">Мой список</string>
+    <string name="just_do_it">Просто сделай это!</string>
+    <string name="tasks_is_over">Заданий больше нет</string>
+    <string name="title">Задание:</string>
+    <string name="default_task_title">Задание</string>
+    <string name="description">Описание:</string>
+    <string name="default_task_description">Описание</string>
+    <string name="date">Сроки:</string>
+    <string name="default_task_date">Сроки</string>
+    <string name="today">Сегодня</string>
+    <string name="new_task">Новое задание</string>
+    <string name="add">Добавить</string>
+    <string name="cancel">Отмена</string>
+    <string name="create"> Создать </string>
+    <string name="change_task">Изменить задание</string>
+    <string name="save">Сохранить</string>
+    <string name="delete">Удалить</string>
+
+
+</resources>

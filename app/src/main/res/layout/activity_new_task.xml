@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/googleBlue"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <!-- Верхняя синяя область. -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="198dp"
+        android:background="@color/googleBlue"
+        android:orientation="vertical">
+
+        <!-- "Новое задание" -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="28dp"
+            android:fontFamily="@font/nunito_bold"
+            android:text="@string/new_task"
+            android:textAlignment="center"
+            android:textColor="@color/customWhite"
+            android:textSize="32sp" />
+
+        <!-- Разделитель. -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/customGray3" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="-60dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_item_task"
+        android:orientation="vertical"
+        android:paddingTop="22dp"
+        android:paddingBottom="22dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp">
+
+            <!-- Заголовок -->
+            <TextView
+                android:id="@+id/tvAddTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/nunito_regular"
+                android:text="@string/title"
+                android:textColor="@color/googleBlue"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/etTaskTitle"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:background="@drawable/bg_input_task"
+                android:fontFamily="@font/nunito_light"
+                android:hint="@string/default_task_title"
+                android:maxLength="50"
+                android:inputType="text"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:textColor="@color/customBlack"
+                android:textColorHint="@color/customGray5" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="vertical">
+
+            <!-- Описание -->
+            <TextView
+                android:id="@+id/tvAddDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/nunito_regular"
+                android:text="@string/description"
+                android:textColor="@color/googleBlue"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/etTaskDescription"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:background="@drawable/bg_input_task"
+                android:fontFamily="@font/nunito_light"
+                android:hint="@string/default_task_description"
+                android:inputType="text"
+                android:maxLength="80"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:textColor="@color/customBlack"
+                android:textColorHint="@color/customGray5" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="vertical">
+
+            <!-- Сроки -->
+            <TextView
+                android:id="@+id/tvAddDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/nunito_regular"
+                android:text="@string/date"
+                android:textColor="@color/googleBlue"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/etTaskDate"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:background="@drawable/bg_input_task"
+                android:fontFamily="@font/nunito_light"
+                android:hint="@string/default_task_date"
+                android:inputType="text"
+                android:maxLength="11"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:textColor="@color/customBlack"
+                android:textColorHint="@color/customGray5" />
+        </LinearLayout>
+    </LinearLayout>
+    
+    <Button
+        android:id="@+id/btnAddTask"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/add"
+        android:textColor="@color/customWhite"
+        android:textAllCaps="false"
+        android:background="@drawable/bg_btn_add"
+        android:fontFamily="@font/nunito_bold"
+        android:textSize="22sp"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"/>
+
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/cancel"
+        android:textColor="@color/customWhite"
+        android:textAllCaps="false"
+        android:background="@drawable/bg_btn_cancel"
+        android:fontFamily="@font/nunito_bold"
+        android:textSize="22sp"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"/>
+</LinearLayout>

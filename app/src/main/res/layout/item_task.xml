@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_marginBottom="20dp"
+    android:background="@drawable/bg_item_task"
+    android:orientation="horizontal">
+
+    <!-- Основной блок (заголовок и детали). -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="220dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="16dp">
+
+        <TextView
+            android:id="@+id/tvTaskTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="19dp"
+            android:textSize="18sp"
+            android:textColor="@color/googleBlue"
+            android:fontFamily="@font/nunito_regular"
+            android:text="@string/default_task_title" />
+
+        <TextView
+            android:id="@+id/tvTaskDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"
+            android:textColor="#ADADAD"
+            android:fontFamily="@font/nunito_extralight"
+            android:text="@string/default_task_description" />
+    </LinearLayout>
+
+    <!-- Дата. -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="25dp">
+
+        <TextView
+            android:id="@+id/tvTaskDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textAlignment="textEnd"
+            android:textColor="@color/googleRed"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/nunito_regular"
+            android:text="@string/today"/>
+    </LinearLayout>
+</LinearLayout>

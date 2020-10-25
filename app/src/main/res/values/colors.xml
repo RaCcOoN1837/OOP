@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorSystemBar">#37383C</color> <!-- Область с надписью. -->
+    <color name="colorLabelBar">#202125</color> <!-- Область с системной информацией (время, заряд и прочее). -->
+    <color name="colorAccent">#03DAC5</color>
+
+    <!-- Мои кастомные цвета. -->
+    <color name="customWhite">#FFFFFF</color>
+    <color name="customBlack">#000000</color>
+    <color name="customBlueLight">#E5E8FF</color>
+    <color name="customGray5">#B5B5B5</color>
+    <color name="customGray4">#202125</color>
+    <color name="customGray3">#4A4E6A</color>
+    <color name="customGray2">#DDDDDD</color>
+    <color name="customGray1">#F4F4F4</color>
+    <color name="customBlueDark">#000C5D</color>
+    <color name="customOrange">#FFA304</color>
+    <color name="customPink">#F63EA5</color>
+    <color name="googleRed">#EA4335</color>
+    <color name="googleYellow">#FBBC04</color>
+    <color name="googleGreen">#34A853</color>
+    <color name="googleBlue">#4285F4</color>
+</resources>
