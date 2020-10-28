@@ -13,7 +13,7 @@
     <string name="new_task">Новое задание</string>
     <string name="add">Добавить</string>
     <string name="cancel">Отмена</string>
-    <string name="create"> Создать </string>
+    <string name="create">+</string>
     <string name="change_task">Изменить задание</string>
     <string name="save">Сохранить</string>
     <string name="delete">Удалить</string>

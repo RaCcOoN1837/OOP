@@ -5,9 +5,13 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.airbnb.lottie.LottieAnimationView;
+
 import java.util.ArrayList;
 
 /*
@@ -15,13 +19,9 @@ import java.util.ArrayList;
  */
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> {
 
-    // Поля.
-//    private static int viewHolderCount;
-//    private int itemsCount; // Количество элементов списка.
     Context context;
     ArrayList<MyTask> tasks;
 
-    // Конструктор.
     public TaskAdapter(Context context, ArrayList<MyTask> tasks) {
         this.context = context;
         this.tasks = tasks;
@@ -32,6 +32,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 
         // Инициализируем наши компоненты.
         TextView tvTaskTitle, tvTaskDescription,tvTaskDate, key;
+        LinearLayout clickArea;
+        LottieAnimationView checkbox;
+        boolean isChecked = false;
         int viewHolderIndex;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -41,6 +44,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
             tvTaskTitle = itemView.findViewById(R.id.tvTaskTitle);
             tvTaskDescription = itemView.findViewById(R.id.tvTaskDescription);
             tvTaskDate =  itemView.findViewById(R.id.tvTaskDate);
+            clickArea = itemView.findViewById(R.id.clickArea);
+            checkbox = itemView.findViewById(R.id.checkbox);
         }
     }
 
@@ -53,7 +58,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int position) {
 
         myViewHolder.tvTaskTitle.setText(this.tasks.get(position).getTitle());
         myViewHolder.tvTaskDescription.setText(this.tasks.get(position).getDescription());
@@ -65,8 +70,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
         final String currentDate = this.tasks.get(position).getDate();
         final String currentKey = this.tasks.get(position).getKey();
 
-        // Открываем форму редактирования задания по нажатию на блок задания.
-        myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+        // Открываем форму редактирования задания по нажатию на область текста.
+        myViewHolder.clickArea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, EditTaskActivity.class);
@@ -75,6 +80,25 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
                 intent.putExtra("date", currentDate);
                 intent.putExtra("key", currentKey);
                 context.startActivity(intent);
+            }
+        });
+
+        // Анимация галочки при нажатии.
+        myViewHolder.checkbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (myViewHolder.isChecked) {
+
+                    myViewHolder.checkbox.setSpeed(-1);
+                    myViewHolder.checkbox.playAnimation();
+                    myViewHolder.isChecked = false;
+                } else {
+
+                    myViewHolder.checkbox.setSpeed(1);
+                    myViewHolder.checkbox.playAnimation();
+                    myViewHolder.isChecked = true;
+                }
             }
         });
     }

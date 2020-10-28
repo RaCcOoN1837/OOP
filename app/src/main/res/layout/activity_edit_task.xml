@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/googleBlue"
+    android:background="@color/customDarkGray"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
     <!-- Верхняя синяя область. -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="198dp"
-        android:background="@color/googleBlue"
+        android:layout_height="125dp"
+        android:background="@color/customDarkGray"
         android:orientation="vertical">
 
         <!-- "Новое задание" -->
@@ -20,9 +20,9 @@
             android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:layout_marginBottom="28dp"
-            android:fontFamily="@font/nunito_bold"
+            android:fontFamily="@font/hindsiliguri_bold"
             android:text="@string/change_task"
             android:textAlignment="center"
             android:textColor="@color/customWhite"
@@ -33,16 +33,13 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="20dp"
-            android:background="@color/customGray3" />
+            android:background="@color/customLightGray" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="-60dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/bg_item_task"
+        android:background="@color/customMiddleGray"
         android:orientation="vertical"
         android:paddingTop="22dp"
         android:paddingBottom="22dp">
@@ -60,24 +57,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:fontFamily="@font/nunito_regular"
+                android:fontFamily="@font/hindsiliguri_regular"
                 android:text="@string/title"
-                android:textColor="@color/googleBlue"
+                android:textColor="@color/customWhite"
                 android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/etTaskTitle"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:background="@drawable/bg_input_task"
-                android:fontFamily="@font/nunito_light"
+                android:background="@color/customMiddleGray"
+                android:fontFamily="@font/hindsiliguri_light"
                 android:hint="@string/default_task_title"
                 android:maxLength="50"
                 android:inputType="text"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
-                android:textColor="@color/customBlack"
-                android:textColorHint="@color/customGray5" />
+                android:textColor="@color/customWhite"
+                android:textColorHint="@color/customLightGray" />
         </LinearLayout>
         <LinearLayout
             android:layout_marginTop="20dp"
@@ -93,24 +90,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:fontFamily="@font/nunito_regular"
+                android:fontFamily="@font/hindsiliguri_regular"
                 android:text="@string/description"
-                android:textColor="@color/googleBlue"
+                android:textColor="@color/customWhite"
                 android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/etTaskDescription"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:background="@drawable/bg_input_task"
-                android:fontFamily="@font/nunito_light"
+                android:background="@color/customMiddleGray"
+                android:fontFamily="@font/hindsiliguri_light"
                 android:hint="@string/default_task_description"
                 android:inputType="text"
                 android:maxLength="80"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
-                android:textColor="@color/customBlack"
-                android:textColorHint="@color/customGray5" />
+                android:textColor="@color/customWhite"
+                android:textColorHint="@color/customLightGray" />
         </LinearLayout>
         <LinearLayout
             android:layout_marginTop="20dp"
@@ -126,24 +123,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:fontFamily="@font/nunito_regular"
+                android:fontFamily="@font/hindsiliguri_regular"
                 android:text="@string/date"
-                android:textColor="@color/googleBlue"
+                android:textColor="@color/customWhite"
                 android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/etTaskDate"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:background="@drawable/bg_input_task"
-                android:fontFamily="@font/nunito_light"
+                android:background="@color/customMiddleGray"
+                android:fontFamily="@font/hindsiliguri_light"
                 android:hint="@string/default_task_date"
                 android:inputType="text"
                 android:maxLength="11"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
-                android:textColor="@color/customBlack"
-                android:textColorHint="@color/customGray5" />
+                android:textColor="@color/customWhite"
+                android:textColorHint="@color/customLightGray" />
         </LinearLayout>
     </LinearLayout>
 
@@ -156,7 +153,7 @@
         android:textColor="@color/customWhite"
         android:textAllCaps="false"
         android:background="@drawable/bg_btn_add"
-        android:fontFamily="@font/nunito_bold"
+        android:fontFamily="@font/hindsiliguri_bold"
         android:textSize="22sp"
         android:layout_width="match_parent"
         android:layout_height="55dp"/>
@@ -170,7 +167,7 @@
         android:textColor="@color/customWhite"
         android:textAllCaps="false"
         android:background="@drawable/bg_btn_cancel"
-        android:fontFamily="@font/nunito_bold"
+        android:fontFamily="@font/hindsiliguri_bold"
         android:textSize="22sp"
         android:layout_width="match_parent"
         android:layout_height="55dp"/>

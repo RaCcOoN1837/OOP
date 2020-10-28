@@ -3,6 +3,6 @@
 <!-- Фон для кнопки "Создать" -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <solid android:color="@color/googleYellow"/>
-    <corners android:radius="8dp"/>
+    <solid android:color="@color/customGreen"/>
+    <corners android:radius="200dp"/>
 </shape>

@@ -1,58 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:layout_marginBottom="20dp"
     android:background="@color/customMiddleGray"
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="220dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
-        <!-- Основной блок (заголовок и детали). -->
-        <LinearLayout
-            android:layout_width="220dp"
+
+        <FrameLayout
+            android:layout_width="80dp"
             android:layout_height="match_parent"
-            android:layout_marginStart="16dp"
-            android:orientation="vertical">
+            android:layout_gravity="center">
 
-            <TextView
-                android:id="@+id/tvTaskTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:fontFamily="@font/hindsiliguri_regular"
-                android:text="@string/default_task_title"
-                android:textColor="@color/customWhite"
-                android:textSize="18sp" />
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/checkbox"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                app:lottie_autoPlay="false"
+                app:lottie_rawRes="@raw/check_mark" />
+        </FrameLayout>
 
-            <TextView
-                android:id="@+id/tvTaskDescription"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/hindsiliguri_light"
-                android:text="@string/default_task_description"
-                android:textColor="@color/customWhite"
-                android:textSize="16sp" />
-        </LinearLayout>
-
-        <!-- Дата. -->
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="25dp">
+            android:id="@+id/clickArea"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <!-- Основной блок (заголовок и детали). -->
+            <LinearLayout
+                android:layout_width="220dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/tvTaskTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="19dp"
+                    android:fontFamily="@font/hindsiliguri_regular"
+                    android:text="@string/default_task_title"
+                    android:textColor="@color/customWhite"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tvTaskDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/hindsiliguri_light"
+                    android:text="@string/default_task_description"
+                    android:textColor="@color/customWhite"
+                    android:textSize="14sp" />
+
+
+            </LinearLayout>
+
+            <!-- Дата. -->
             <TextView
+                android:paddingTop="25dp"
                 android:id="@+id/tvTaskDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/hindsiliguri_regular"
                 android:text="@string/today"
-
+                android:textAlignment="textEnd"
                 android:textColor="@color/customWhite"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -62,6 +78,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/customWhite" />
+        android:layout_marginTop="-1dp"
+        android:background="@color/customLightGray" />
 </LinearLayout>

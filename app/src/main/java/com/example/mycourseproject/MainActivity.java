@@ -9,9 +9,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,8 +28,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     // Инифиализируем наши компоненты.
-    TextView tvTitle, tvSubtitle, tvEnd;
-    Button btnAddTask;
+    TextView tvTitle, tvEnd;
+    LottieAnimationView btnAddTask;
     DatabaseReference reference; // Для работы с базой данных.
     RecyclerView tasks; // Прокручиваемый список.
     ArrayList<MyTask> list; // Служит источником данных для RecyclerView.
@@ -40,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Связываем наши компоненты с XML файлом.
         this.tvTitle = findViewById(R.id.tvTitle);
-        this.tvSubtitle = findViewById(R.id.tvSubtitle);
         this.tvEnd = findViewById(R.id.tvEnd);
         this.btnAddTask = findViewById(R.id.btnAddTask);
         this.tasks = findViewById(R.id.tasks);
