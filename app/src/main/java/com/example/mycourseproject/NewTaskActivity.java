@@ -58,8 +58,7 @@ public class NewTaskActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 // Возвращаемся на главный экран.
-                Intent intent = new Intent(NewTaskActivity.this, MainActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(NewTaskActivity.this, MainActivity.class));
             }
         });
 
@@ -68,39 +67,27 @@ public class NewTaskActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                // Ссылка для работы с базой данных.
-                reference = FirebaseDatabase.getInstance().getReference().child("TaskBox").child("Task" + taskKey);
-                reference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String newTitle = etTaskTitle.getText().toString();
+                String newDescription = etTaskDescription.getText().toString();
+                String newDate = etTaskDate.getText().toString();
 
-                        String newTitle = etTaskTitle.getText().toString();
-                        String newDescription = etTaskDescription.getText().toString();
-                        String newDate = etTaskDate.getText().toString();
+                // Передаем данные в БД.
+                if ((!newTitle.equals("")) && (!newDate.equals(""))) {
 
-                        // Передаем данные в БД.
-                        if ((!newTitle.equals("")) && (!newDate.equals(""))) {
+                            /*
+                                РЕАЛИЗОВАТЬ ДОБАВЛЕНИЕ ЗАДАНИЯ!
+                             */
 
-                            dataSnapshot.getRef().child("title").setValue(newTitle);
-                            dataSnapshot.getRef().child("description").setValue(newDescription);
-                            dataSnapshot.getRef().child("date").setValue(newDate);
-                            dataSnapshot.getRef().child("key").setValue(taskKey); // Не забываем передать ключ.
+                    // Возвращаемся на главный экран.
+                    Intent intent = new Intent(NewTaskActivity.this, MainActivity.class);
+                    startActivity(intent);
+                } else {
 
-                            // Возвращаемся на главный экран.
-                            Intent intent = new Intent(NewTaskActivity.this, MainActivity.class);
-                            startActivity(intent);
-                        } else {
-
-                            // Показываем уведомление об ошибке.
-                            Toast toast = Toast.makeText(getApplicationContext(), "Заполните поля!", Toast.LENGTH_SHORT);
-                            toast.setGravity(Gravity.CENTER, 0, -670);
-                            toast.show();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {}
-                });
+                    // Показываем уведомление об ошибке.
+                    Toast toast = Toast.makeText(getApplicationContext(), "Заполните поля!", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, -670);
+                    toast.show();
+                }
             }
         });
     }

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- Фон для кнопки "Отмена". -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <solid android:color="@color/googleRed" />
+    <solid android:color="@color/googleGreen" />
     <corners android:radius="200dp" />
 </shape>

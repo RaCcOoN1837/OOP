@@ -8,8 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,8 +29,8 @@ public class MainActivity extends AppCompatActivity {
     TextView tvTitle, tvEnd;
     LottieAnimationView btnAddTask;
     DatabaseReference reference; // Для работы с базой данных.
-    RecyclerView tasks; // Прокручиваемый список.
-    ArrayList<MyTask> list; // Служит источником данных для RecyclerView.
+    RecyclerView recyclerView; // Прокручиваемый список.
+    ArrayList<MyTask> list = new ArrayList<>(); // Служит источником данных для RecyclerView.
     TaskAdapter taskAdapter; // Адаптер. (Предназначен для отображения данных из list в RecyclerView)
 
     @Override
@@ -44,7 +42,10 @@ public class MainActivity extends AppCompatActivity {
         this.tvTitle = findViewById(R.id.tvTitle);
         this.tvEnd = findViewById(R.id.tvEnd);
         this.btnAddTask = findViewById(R.id.btnAddTask);
-        this.tasks = findViewById(R.id.tasks);
+        this.recyclerView = findViewById(R.id.tasks);
+        this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        taskAdapter = new TaskAdapter(MainActivity.this, list); // Создаем адаптер.
+        recyclerView.setAdapter(taskAdapter); // Устанавливаем адаптер для нашего RecyclerView.
 
         // Открываем форму добавления задания по нажатию кнопки "Создать".
         btnAddTask.setOnClickListener(new View.OnClickListener() {
@@ -55,37 +56,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Работа с данными.
-        this.list = new ArrayList<>();
-        this.tasks.setLayoutManager(new LinearLayoutManager(this));
+        list.add(new MyTask("Тестовое задание 0", "Описание тестового задания", true, "0"));
+        list.add(new MyTask("Тестовое задание 1", "Описание тестового задания", false, "1"));
+        list.add(new MyTask("Тестовое задание 2", "Описание тестового задания", false, "2"));
+        list.add(new MyTask("Тестовое задание 3", "Описание тестового задания", false, "3"));
+        list.add(new MyTask("Тестовое задание 4", "Описание тестового задания", false, "4"));
+        list.add(new MyTask("Тестовое задание 5", "Описание тестового задания", false, "5"));
+        list.add(new MyTask("Тестовое задание 6", "Описание тестового задания", false, "6"));
+        list.add(new MyTask("Тестовое задание 7", "Описание тестового задания", false, "7"));
+        list.add(new MyTask("Тестовое задание 8", "Описание тестового задания", false, "8"));
+        list.add(new MyTask("Тестовое задание 9", "Описание тестового задания", false, "9"));
 
-        // Получение данных из БД.
-
-        // Ссылка для работы с базой данных.
-        this.reference = FirebaseDatabase.getInstance().getReference().child("TaskBox");
-        this.reference.addValueEventListener(new ValueEventListener() {
-
-            // Получаем данные из БД и добавляем
-            // их в list для отображения в RecyclerView.
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-
-                    MyTask task = dataSnapshot1.getValue(MyTask.class); // Считываем задание из БД
-                    list.add(task); // Добавляем задание в список.
-                }
-                taskAdapter = new TaskAdapter(MainActivity.this, list); // Создаем адаптер.
-                tasks.setAdapter(taskAdapter); // Устанавливаем адаптер для нашего RecyclerView.
-                taskAdapter.notifyDataSetChanged(); // Уведомляем об изменениях.
-            }
-
-            // Отображение ошибок.
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                Toast.makeText(getApplicationContext(), "Нет данных", Toast.LENGTH_SHORT).show();
-            }
-        });
+        taskAdapter.notifyDataSetChanged(); // Уведомляем об изменениях.
     }
 }
