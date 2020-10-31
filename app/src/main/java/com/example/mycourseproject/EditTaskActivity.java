@@ -23,8 +23,7 @@ public class EditTaskActivity extends AppCompatActivity {
 
     // Инициализируем наши компоненты.
     EditText title, description, date;
-    Button btnSaveChanges, btnDelete;
-    DatabaseReference reference;
+    Button btnSaveChanges, btnDelete, btnCancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,42 +33,34 @@ public class EditTaskActivity extends AppCompatActivity {
         // Связываем наши компоненты с XML файлом.
         title = findViewById(R.id.etTaskTitle);
         description = findViewById(R.id.etTaskDescription);
-        date = findViewById(R.id.etTaskDate);
         btnSaveChanges = findViewById(R.id.btnSaveChanges);
         btnDelete = findViewById(R.id.btnDelete);
+        btnCancel = findViewById(R.id.btnCancel);
 
         // Получаем параметры выбраного задания.
         title.setText(getIntent().getStringExtra("title"));
         description.setText(getIntent().getStringExtra("description"));
-        date.setText(getIntent().getStringExtra("date"));
         final String key = getIntent().getStringExtra("key"); // Не забываем про ключ задания.
 
-        // Ссылка для работы с базой данных.
-        reference = FirebaseDatabase.getInstance().getReference().child("TaskBox").child("Task" + key);
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(EditTaskActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // Удаление задание по нажатию кнопки "Удалить".
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                // Удаляем задание из базы данных.
-                reference.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
+                /*
+                    ДОБАВИТЬ РЕАЛИЗАЦИЮ УДАЛЕНИЯ ЗАДАНИЯ!
+                 */
 
-                        // Проверяем успешность удаления.
-                        if (task.isSuccessful()) {
-
-                            // Возвращаемся на главный экран.
-                            Intent intent = new Intent(EditTaskActivity.this, MainActivity.class);
-                            startActivity(intent);
-                        } else {
-
-                            // Показываем уведомление об ошибке.
-                            Toast.makeText(getApplicationContext(), "Ошибка удаления!", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                startActivity(new Intent(EditTaskActivity.this, MainActivity.class));
             }
         });
 
@@ -78,39 +69,25 @@ public class EditTaskActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                reference.addValueEventListener(new ValueEventListener() {
+                String newTitle = title.getText().toString();
+                String newDescription = description.getText().toString();
+                String newDate = date.getText().toString();
 
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if ((!newTitle.equals("")) && (!newDate.equals(""))) {
 
-                        String newTitle = title.getText().toString();
-                        String newDescription = description.getText().toString();
-                        String newDate = date.getText().toString();
+                    /*
+                        ДОБАВИТЬ РЕАЛИЗАЦИЮ ИЗМЕНЕНИЯ ЗАДАНИЯ!
+                     */
 
-                        // Передаем обновленные данные в БД.
-                        if ((!newTitle.equals("")) && (!newDate.equals(""))) {
+                    // Возвращаемся на главный экран.
+                    startActivity(new Intent(EditTaskActivity.this, MainActivity.class));
+                } else {
 
-                            dataSnapshot.getRef().child("title").setValue(newTitle);
-                            dataSnapshot.getRef().child("description").setValue(newDescription);
-                            dataSnapshot.getRef().child("date").setValue(newDate);
-                            dataSnapshot.getRef().child("key").setValue(key); // Не забываем передать ключ.
-
-                            // Возвращаемся на главный экран.
-                            Intent intent = new Intent(EditTaskActivity.this, MainActivity.class);
-                            startActivity(intent);
-                        } else {
-
-                            // Показываем уведомление об ошибке.
-                            Toast toast = Toast.makeText(getApplicationContext(), "Заполните поля!", Toast.LENGTH_SHORT);
-                            toast.setGravity(Gravity.CENTER, 0, -670);
-                            toast.show();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                    }
-                });
+                    // Показываем уведомление об ошибке.
+                    Toast toast = Toast.makeText(getApplicationContext(), "Заполните поля!", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, 0, -670);
+                    toast.show();
+                }
             }
         });
     }

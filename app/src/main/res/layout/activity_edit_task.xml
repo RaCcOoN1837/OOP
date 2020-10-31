@@ -8,33 +8,24 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <!-- Верхняя синяя область. -->
-    <LinearLayout
+    <!-- "Новое задание" -->
+    <TextView
+        android:id="@+id/tvTitle"
         android:layout_width="match_parent"
-        android:layout_height="125dp"
-        android:background="@color/customDarkGray"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:fontFamily="@font/hindsiliguri_bold"
+        android:text="@string/change_task"
+        android:textAlignment="center"
+        android:textColor="@color/customWhite"
+        android:textSize="32sp" />
 
-        <!-- "Новое задание" -->
-        <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="28dp"
-            android:fontFamily="@font/hindsiliguri_bold"
-            android:text="@string/change_task"
-            android:textAlignment="center"
-            android:textColor="@color/customWhite"
-            android:textSize="32sp" />
-
-        <!-- Разделитель. -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="20dp"
-            android:background="@color/customLightGray" />
-    </LinearLayout>
+    <!-- Разделитель. -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/customLightGray" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -44,131 +35,131 @@
         android:paddingTop="22dp"
         android:paddingBottom="22dp">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp">
-
-            <!-- Заголовок -->
-            <TextView
-                android:id="@+id/tvAddTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:fontFamily="@font/hindsiliguri_regular"
-                android:text="@string/title"
-                android:textColor="@color/customWhite"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/etTaskTitle"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:background="@color/customMiddleGray"
-                android:fontFamily="@font/hindsiliguri_light"
-                android:hint="@string/default_task_title"
-                android:maxLength="50"
-                android:inputType="text"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:textColor="@color/customWhite"
-                android:textColorHint="@color/customLightGray" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginTop="20dp"
+        <!-- Заголовок -->
+        <TextView
+            android:id="@+id/tvAddTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:orientation="vertical">
+            android:fontFamily="@font/hindsiliguri_regular"
+            android:text="@string/title"
+            android:textColor="@color/customWhite"
+            android:textSize="18sp" />
 
-            <!-- Описание -->
-            <TextView
-                android:id="@+id/tvAddDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:fontFamily="@font/hindsiliguri_regular"
-                android:text="@string/description"
-                android:textColor="@color/customWhite"
-                android:textSize="18sp" />
+        <EditText
+            android:id="@+id/etTaskTitle"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/customMiddleGray"
+            android:fontFamily="@font/hindsiliguri_light"
+            android:hint="@string/default_task_title"
+            android:inputType="text"
+            android:maxLength="50"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:textColor="@color/customWhite"
+            android:textColorHint="@color/customLightGray" />
 
-            <EditText
-                android:id="@+id/etTaskDescription"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:background="@color/customMiddleGray"
-                android:fontFamily="@font/hindsiliguri_light"
-                android:hint="@string/default_task_description"
-                android:inputType="text"
-                android:maxLength="80"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:textColor="@color/customWhite"
-                android:textColorHint="@color/customLightGray" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginTop="20dp"
+        <!-- Описание -->
+        <TextView
+            android:id="@+id/tvAddDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:orientation="vertical">
+            android:fontFamily="@font/hindsiliguri_regular"
+            android:text="@string/description"
+            android:textColor="@color/customWhite"
+            android:textSize="18sp" />
 
-            <!-- Сроки -->
-            <TextView
-                android:id="@+id/tvAddDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:fontFamily="@font/hindsiliguri_regular"
-                android:text="@string/date"
-                android:textColor="@color/customWhite"
-                android:textSize="18sp" />
+        <EditText
+            android:id="@+id/etTaskDescription"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/customMiddleGray"
+            android:fontFamily="@font/hindsiliguri_light"
+            android:hint="@string/default_task_description"
+            android:inputType="text"
+            android:maxLength="80"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:textColor="@color/customWhite"
+            android:textColorHint="@color/customLightGray" />
 
-            <EditText
-                android:id="@+id/etTaskDate"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:background="@color/customMiddleGray"
-                android:fontFamily="@font/hindsiliguri_light"
-                android:hint="@string/default_task_date"
-                android:inputType="text"
-                android:maxLength="11"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:textColor="@color/customWhite"
-                android:textColorHint="@color/customLightGray" />
-        </LinearLayout>
+        <!-- Сроки -->
+        <TextView
+            android:id="@+id/tvAddDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/hindsiliguri_regular"
+            android:text="@string/date"
+            android:textColor="@color/customWhite"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/etTaskDate"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/customMiddleGray"
+            android:fontFamily="@font/hindsiliguri_light"
+            android:hint="@string/default_task_date"
+            android:inputType="text"
+            android:maxLength="11"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:textColor="@color/customWhite"
+            android:textColorHint="@color/customLightGray" />
+
     </LinearLayout>
 
     <Button
         android:id="@+id/btnSaveChanges"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/save"
-        android:textColor="@color/customWhite"
-        android:textAllCaps="false"
-        android:background="@drawable/bg_btn_add"
-        android:fontFamily="@font/hindsiliguri_bold"
-        android:textSize="22sp"
         android:layout_width="match_parent"
-        android:layout_height="55dp"/>
+        android:layout_height="55dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_green_button"
+        android:fontFamily="@font/hindsiliguri_bold"
+        android:text="@string/save"
+        android:textAllCaps="false"
+        android:textColor="@color/customWhite"
+        android:textSize="22sp" />
 
     <Button
         android:id="@+id/btnDelete"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/delete"
-        android:textColor="@color/customWhite"
-        android:textAllCaps="false"
-        android:background="@drawable/bg_btn_cancel"
-        android:fontFamily="@font/hindsiliguri_bold"
-        android:textSize="22sp"
         android:layout_width="match_parent"
-        android:layout_height="55dp"/>
+        android:layout_height="55dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_red_button"
+        android:fontFamily="@font/hindsiliguri_bold"
+        android:text="@string/delete"
+        android:textAllCaps="false"
+        android:textColor="@color/customWhite"
+        android:textSize="22sp" />
+
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_yellow_button"
+        android:fontFamily="@font/hindsiliguri_bold"
+        android:text="@string/cancel"
+        android:textAllCaps="false"
+        android:textColor="@color/customWhite"
+        android:textSize="22sp" />
 </LinearLayout>
