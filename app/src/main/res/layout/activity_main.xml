@@ -15,7 +15,7 @@
 
         <!-- "Мой список" -->
         <TextView
-            android:id="@+id/tvTitle"
+            android:id="@+id/STARTtvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
@@ -27,7 +27,7 @@
 
         <!-- Кнопка "Создать" -->
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/btnAddTask"
+            android:id="@+id/STARTbtnAddTask"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
@@ -47,7 +47,7 @@
 
     <!-- Список. -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/tasks"
+        android:id="@+id/STARTtasks"
         class="androidx.appcompat.app.AlertController$RecycleListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
 
     <!-- "Заданий больше нет" -->
     <TextView
-        android:id="@+id/tvEnd"
+        android:id="@+id/STARTtvEnd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"

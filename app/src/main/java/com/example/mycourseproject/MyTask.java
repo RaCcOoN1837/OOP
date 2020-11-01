@@ -1,23 +1,26 @@
 package com.example.mycourseproject;
 
+import java.util.Calendar;
+
 /*
     Класс "Задание".
  */
-public class MyTask {
+public class MyTask implements Comparable<MyTask>{
 
     // Поля.
-    String title;
-    String description;
-    boolean isDone;
-    String id;
+    private String title;
+    private String description;
+    private String date;
+    private boolean isDone;
+    private String id;
 
-    // Конструктор без параметров.
     public MyTask() {
     }
 
-    public MyTask(String title, String description, boolean isDone, String id) {
+    public MyTask(String title, String description, String date, boolean isDone, String id) {
         this.title = title;
         this.description = description;
+        this.date = date;
         this.isDone = isDone;
         this.id = id;
     }
@@ -36,6 +39,14 @@ public class MyTask {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public boolean isDone() {
@@ -65,6 +76,7 @@ public class MyTask {
         if (title != null ? !title.equals(task.title) : task.title != null) return false;
         if (description != null ? !description.equals(task.description) : task.description != null)
             return false;
+        if (date != null ? !date.equals(task.date) : task.date != null) return false;
         return id != null ? id.equals(task.id) : task.id == null;
     }
 
@@ -72,8 +84,16 @@ public class MyTask {
     public int hashCode() {
         int result = title != null ? title.hashCode() : 0;
         result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (isDone ? 1 : 0);
         result = 31 * result + (id != null ? id.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public int compareTo(MyTask o) {
+
+        // РЕАЛИЗОВАТЬ ДЛЯ СОРТИРОВКИ ЗАДАНИЙ В СПИСКЕ.
+        return 0;
     }
 }

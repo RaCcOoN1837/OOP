@@ -1,51 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="100dp"
     android:background="@color/customMiddleGray"
     android:orientation="vertical">
 
     <CheckBox
-        android:id="@+id/checkbox"
-        android:button="@drawable/custom_checkbox"
+        android:id="@+id/ELEMENTcheckbox"
         android:layout_width="33dp"
         android:layout_height="33dp"
         android:layout_gravity="center"
+        android:button="@drawable/custom_checkbox"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/clickArea"
+        app:layout_constraintEnd_toStartOf="@+id/ELEMENTclickArea"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/clickArea"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ELEMENTclickArea"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="80dp">
 
         <TextView
-            android:id="@+id/tvTaskTitle"
+            android:id="@+id/ELEMENTtvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/hindsiliguri_regular"
             android:text="@string/default_task_title"
             android:textColor="@color/customWhite"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvTaskDescription"
+            android:id="@+id/ELEMENTtvDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:fontFamily="@font/hindsiliguri_light"
             android:text="@string/default_task_description"
             android:textColor="@color/customWhite"
-            android:textSize="14sp" />
-    </LinearLayout>
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ELEMENTtvTitle" />
+
+        <TextView
+            android:id="@+id/ELEMENTtvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/custom_date"
+            android:paddingStart="12dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="4dp"
+            android:text="@string/date"
+            android:textColor="@color/customWhite"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Разделитель. -->
     <View

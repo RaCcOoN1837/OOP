@@ -1,39 +1,35 @@
 package com.example.mycourseproject;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Random;
 
 /*
     Экран добавления нового задания.
  */
-public class NewTaskActivity extends AppCompatActivity {
+public class NewTaskActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     // Инифиализируем наши компоненты.
-    TextView tvTitle, tvAddTitle, tvAddDescription, tvAddDate;
-    EditText etTaskTitle, etTaskDescription, etTaskDate;
+    TextView tvDate;
+    EditText etTitle, etDescription;
     Button btnAddTask, btnCancel;
-
-    DatabaseReference reference; // Ссылка для работы с базой данных.
-    Integer taskNumber = Integer.MAX_VALUE - (int) System.currentTimeMillis(); // Ключи заданий будут создаваться по убыванию для нужной сортировки.
-    String taskKey = Integer.toString(taskNumber); // Ключ задания (необходим для редактирования задания).
-
 
     // При открытии экрана:
     @Override
@@ -42,15 +38,21 @@ public class NewTaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_task);
 
         // Связываем наши компоненты с XML файлом.
-        tvTitle = findViewById(R.id.tvTitle);
-        tvAddTitle = findViewById(R.id.tvAddTitle);
-        tvAddDescription = findViewById(R.id.tvAddDescription);
-        tvAddDate = findViewById(R.id.tvAddDate);
-        etTaskTitle = findViewById(R.id.etTaskTitle);
-        etTaskDescription = findViewById(R.id.etTaskDescription);
-        etTaskDate = findViewById(R.id.etTaskDate);
-        btnAddTask = findViewById(R.id.btnAddTask);
-        btnCancel = findViewById(R.id.btnCancel);
+        tvDate = findViewById(R.id.NEWtvDate);
+        etTitle = findViewById(R.id.NEWetTitle);
+        etDescription = findViewById(R.id.NEWetDescription);
+        btnAddTask = findViewById(R.id.NEWbtnAddTask);
+        btnCancel = findViewById(R.id.NEWbtnCancel);
+
+        // Открытие календаря по нажатию на кнопку Календарь.
+        tvDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                DialogFragment datePicker = new DatePickerFragment();
+                datePicker.show(getSupportFragmentManager(), "");
+            }
+        });
 
         // Возвращение на главный экран по нажатию кнопки "Отмена".
         btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -67,20 +69,20 @@ public class NewTaskActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String newTitle = etTaskTitle.getText().toString();
-                String newDescription = etTaskDescription.getText().toString();
-                String newDate = etTaskDate.getText().toString();
+                String newTitle = etTitle.getText().toString();
+                String newDescription = etDescription.getText().toString();
+                String newDate = tvDate.getText().toString();
 
-                // Передаем данные в БД.
+
+
                 if ((!newTitle.equals("")) && (!newDate.equals(""))) {
 
-                            /*
-                                РЕАЛИЗОВАТЬ ДОБАВЛЕНИЕ ЗАДАНИЯ!
-                             */
+                    // Создаем новое задание.
+                    MyTask myTask = new MyTask(newTitle, newDescription, newDate, false, "777");
+                    Storage.getStorage().add(myTask);
 
                     // Возвращаемся на главный экран.
-                    Intent intent = new Intent(NewTaskActivity.this, MainActivity.class);
-                    startActivity(intent);
+                    startActivity(new Intent(NewTaskActivity.this, MainActivity.class));
                 } else {
 
                     // Показываем уведомление об ошибке.
@@ -90,5 +92,19 @@ public class NewTaskActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd");
+        String currentDate = dateFormat.format(calendar.getTime());
+
+        tvDate.setText(currentDate);
     }
 }

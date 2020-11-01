@@ -10,7 +10,6 @@
 
     <!-- "Новое задание" -->
     <TextView
-        android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -35,94 +34,67 @@
         android:paddingTop="22dp"
         android:paddingBottom="22dp">
 
-        <!-- Заголовок -->
-        <TextView
-            android:id="@+id/tvAddTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:fontFamily="@font/hindsiliguri_regular"
-            android:text="@string/title"
-            android:textColor="@color/customWhite"
-            android:textSize="18sp" />
-
         <EditText
-            android:id="@+id/etTaskTitle"
+            android:id="@+id/EDITetTitle"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:background="@color/customMiddleGray"
+            android:drawableStart="@drawable/ic_task_48"
+            android:drawablePadding="12dp"
             android:fontFamily="@font/hindsiliguri_light"
             android:hint="@string/default_task_title"
             android:inputType="text"
             android:maxLength="50"
-            android:paddingStart="12dp"
             android:paddingEnd="12dp"
             android:textColor="@color/customWhite"
             android:textColorHint="@color/customLightGray" />
 
-        <!-- Описание -->
-        <TextView
-            android:id="@+id/tvAddDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:fontFamily="@font/hindsiliguri_regular"
-            android:text="@string/description"
-            android:textColor="@color/customWhite"
-            android:textSize="18sp" />
-
         <EditText
-            android:id="@+id/etTaskDescription"
+            android:id="@+id/EDITetDescription"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:background="@color/customMiddleGray"
+            android:drawableStart="@drawable/ic_description_48"
+            android:drawablePadding="12dp"
             android:fontFamily="@font/hindsiliguri_light"
             android:hint="@string/default_task_description"
             android:inputType="text"
             android:maxLength="80"
-            android:paddingStart="12dp"
             android:paddingEnd="12dp"
             android:textColor="@color/customWhite"
             android:textColorHint="@color/customLightGray" />
 
-        <!-- Сроки -->
         <TextView
-            android:id="@+id/tvAddDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:fontFamily="@font/hindsiliguri_regular"
-            android:text="@string/date"
-            android:textColor="@color/customWhite"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/etTaskDate"
+            android:id="@+id/EDITtvDate"
             android:layout_width="match_parent"
             android:layout_height="55dp"
+            android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:background="@color/customMiddleGray"
-            android:fontFamily="@font/hindsiliguri_light"
-            android:hint="@string/default_task_date"
-            android:inputType="text"
-            android:maxLength="11"
-            android:paddingStart="12dp"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/hindsiliguri_regular"
+            android:hint="@string/date_hint"
             android:paddingEnd="12dp"
             android:textColor="@color/customWhite"
-            android:textColorHint="@color/customLightGray" />
-
+            android:textColorHint="@color/customLightGray"
+            android:textSize="18sp"
+            android:drawablePadding="12dp"
+            app:drawableStartCompat="@drawable/ic_baseline_calendar_today_48" />
     </LinearLayout>
 
+    <!-- Разделитель. -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/customLightGray" />
+
     <Button
-        android:id="@+id/btnSaveChanges"
+        android:id="@+id/EDITbtnSaveChanges"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginStart="16dp"
@@ -136,7 +108,7 @@
         android:textSize="22sp" />
 
     <Button
-        android:id="@+id/btnDelete"
+        android:id="@+id/EDITbtnDelete"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginStart="16dp"
@@ -150,7 +122,7 @@
         android:textSize="22sp" />
 
     <Button
-        android:id="@+id/btnCancel"
+        android:id="@+id/EDITbtnCancel"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginStart="16dp"

@@ -4,7 +4,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorSystemBar</item>
         <item name="colorPrimaryDark">@color/customBlack</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/customLightGray</item>
     </style>
 
     <!-- Light application theme. -->
@@ -12,7 +12,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorSystemBar</item>
         <item name="colorPrimaryDark">@color/colorLabelBar</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/customMiddleGray</item>
     </style>
 
     <style name="FullScreen" parent="AppTheme">

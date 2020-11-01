@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">My List</string>
     <string name="my_list">Мой список</string>
-    <string name="just_do_it">Просто сделай это!</string>
     <string name="tasks_is_over">Заданий больше нет</string>
     <string name="title">Задание:</string>
     <string name="default_task_title">Задание</string>
@@ -17,6 +16,7 @@
     <string name="change_task">Изменить задание</string>
     <string name="save">Сохранить</string>
     <string name="delete">Удалить</string>
+    <string name="date_hint">Дата</string>
 
 
 </resources>

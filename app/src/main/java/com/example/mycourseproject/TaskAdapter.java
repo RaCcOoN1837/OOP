@@ -10,6 +10,7 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -20,30 +21,32 @@ import java.util.ArrayList;
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> {
 
     Context context;
-    ArrayList<MyTask> tasks;
+//    ArrayList<MyTask> tasks;
 
-    public TaskAdapter(Context context, ArrayList<MyTask> tasks) {
+//    public TaskAdapter(Context context, ArrayList<MyTask> tasks) {
+    public TaskAdapter(Context context) {
         this.context = context;
-        this.tasks = tasks;
+//        this.tasks = tasks;
     }
 
     // Класс единичного элемента RecyclerView.
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         // Инициализируем наши компоненты.
-        TextView tvTaskTitle, tvTaskDescription, key;
-        LinearLayout clickArea;
+        TextView tvTitle, tvDescription, tvDate;
+        ConstraintLayout clickArea;
         CheckBox checkbox;
-        boolean isDone = false;
+        String key;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             // Связываем наши компоненты с XML файлом.
-            tvTaskTitle = itemView.findViewById(R.id.tvTaskTitle);
-            tvTaskDescription = itemView.findViewById(R.id.tvTaskDescription);
-            clickArea = itemView.findViewById(R.id.clickArea);
-            checkbox = itemView.findViewById(R.id.checkbox);
+            tvTitle = itemView.findViewById(R.id.ELEMENTtvTitle);
+            tvDescription = itemView.findViewById(R.id.ELEMENTtvDescription);
+            tvDate = itemView.findViewById(R.id.ELEMENTtvDate);
+            clickArea = itemView.findViewById(R.id.ELEMENTclickArea);
+            checkbox = itemView.findViewById(R.id.ELEMENTcheckbox);
         }
     }
 
@@ -57,15 +60,25 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, final int position) {
 
-        myViewHolder.tvTaskTitle.setText(this.tasks.get(position).getTitle());
-        myViewHolder.tvTaskDescription.setText(this.tasks.get(position).getDescription());
+        final MyTask myTask = Storage.getStorage().get(position);
+
+        myViewHolder.tvTitle.setText(myTask.getTitle());
+        myViewHolder.tvDescription.setText(myTask.getDescription());
+        myViewHolder.tvDate.setText(myTask.getDate());
+
+        /*
+            НЕ РАБОТАЕТ!!!
+         */
+        myViewHolder.checkbox.setActivated(true);
 
         // Получаем параметры изменяемого задания.
-        final String currentTitle = this.tasks.get(position).getTitle();
-        final String currentDescription = this.tasks.get(position).getDescription();
-        final String currentKey = this.tasks.get(position).getId();
+        final String currentTitle = myTask.getTitle();
+        final String currentDescription = myTask.getDescription();
+        final String currentDate = myTask.getDate();
+        final boolean currentIsDone = myTask.isDone();
+        final String currentId = myTask.getId();
 
         // Открываем форму редактирования задания по нажатию на область текста.
         myViewHolder.clickArea.setOnClickListener(new View.OnClickListener() {
@@ -74,21 +87,30 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
                 Intent intent = new Intent(context, EditTaskActivity.class);
                 intent.putExtra("title", currentTitle);
                 intent.putExtra("description", currentDescription);
-                intent.putExtra("key", currentKey);
+                intent.putExtra("date", currentDate);
+//                intent.putExtra("isDone", currentIsDone);
+                intent.putExtra("id", currentId);
+
+                // Передаем индекс задания в EditTaskActivity.
+                intent.putExtra("position", position);
                 context.startActivity(intent);
+
             }
         });
 
         myViewHolder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                myViewHolder.isDone = true;
+
+                /*
+                    РЕАЛИЗОВАТЬ!!!
+                 */
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return tasks.size();
+        return Storage.getStorage().size();
     }
 }
