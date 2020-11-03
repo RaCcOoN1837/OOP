@@ -1,4 +1,4 @@
-package com.example.mycourseproject;
+package com.example.mycourseproject.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -14,7 +14,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.DateFormat;
+import com.example.mycourseproject.DatePickerFragment;
+import com.example.mycourseproject.MyTask;
+import com.example.mycourseproject.R;
+import com.example.mycourseproject.Storage;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -39,12 +43,16 @@ public class EditTaskActivity extends AppCompatActivity implements DatePickerDia
         btnCancel = findViewById(R.id.EDITbtnCancel);
 
         // Получаем параметры выбраного задания.
-        etTitle.setText(getIntent().getStringExtra("title"));
-        etDescription.setText(getIntent().getStringExtra("description"));
-        tvDate.setText(getIntent().getStringExtra("date"));
-        final String id = getIntent().getStringExtra("id");
-//        final boolean isDone = getIntent().getBooleanExtra("isDone", false);
+        int position = getIntent().getIntExtra("position", 0);
+        MyTask myTask = Storage.getStorage().get(position);
 
+        etTitle.setText(myTask.getTitle());
+        etDescription.setText(myTask.getDescription());
+        tvDate.setText(myTask.getDate());
+        final String id = myTask.getId();
+        final boolean isDone = myTask.isDone();
+
+        // Открываем календарь.
         tvDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,15 +71,13 @@ public class EditTaskActivity extends AppCompatActivity implements DatePickerDia
             }
         });
 
-        // "Удалить".
+        // Удаляем задание
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 // Получаем переданный индекс.
                 int position = getIntent().getIntExtra("position", 0);
-
-                // Получаем задание по индексу и редактируем его.
                 MyTask myTask = Storage.getStorage().get(position);
 
                 Storage.getStorage().remove(myTask);
@@ -80,7 +86,7 @@ public class EditTaskActivity extends AppCompatActivity implements DatePickerDia
             }
         });
 
-        // Сохранение изменений по нажатию кнопки "Сохранить".
+        // Изменяем задание
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,19 +97,12 @@ public class EditTaskActivity extends AppCompatActivity implements DatePickerDia
 
                 if ((!newTitle.equals("")) && (!newDate.equals(""))) {
 
-                    // Получаем переданный индекс.
                     int position = getIntent().getIntExtra("position", 0);
-
-                    // Получаем задание по индексу и редактируем его.
                     MyTask myTask = Storage.getStorage().get(position);
-
-                    Storage.getStorage().remove(myTask);
 
                     myTask.setTitle(newTitle);
                     myTask.setDescription(newDescription);
                     myTask.setDate(newDate);
-
-                    Storage.getStorage().add(myTask);
 
                     // Возвращаемся на главный экран.
                     startActivity(new Intent(EditTaskActivity.this, MainActivity.class));

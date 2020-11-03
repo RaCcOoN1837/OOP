@@ -1,6 +1,5 @@
-package com.example.mycourseproject;
+package com.example.mycourseproject.Activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,8 +11,13 @@ import android.view.View;
 import com.airbnb.lottie.LottieAnimationView;
 
 
-import java.util.ArrayList;
+import com.example.mycourseproject.CustomComparator;
+import com.example.mycourseproject.MyTask;
+import com.example.mycourseproject.R;
 import com.example.mycourseproject.Storage;
+import com.example.mycourseproject.TaskAdapter;
+
+import java.util.Collections;
 
 /*
     Главный экран.
@@ -47,7 +51,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Storage.getStorage().add(new MyTask("Сходить в Ленту", "Купить продукты", "Nov 04", true, "999"));
+//        Storage.getStorage().add(new MyTask("Выполнено", "Описание", "Nov 04", true, "999"));
+//        Storage.getStorage().add(new MyTask("Не выполнено", "Описание", "Nov 04", false, "999"));
+//        Storage.getStorage().add(new MyTask("Выполнено", "Описание", "Nov 04", true, "999"));
+//        Storage.getStorage().add(new MyTask("Не выполнено", "Описание", "Nov 04", false, "999"));
+//        Collections.sort(Storage.getStorage().getList(), new CustomComparator());
         taskAdapter.notifyDataSetChanged(); // Уведомляем об изменениях.
     }
 }

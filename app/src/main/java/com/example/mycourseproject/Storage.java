@@ -23,7 +23,7 @@ public class Storage {
         this.items.remove(myTask);
     }
 
-    public List<MyTask> getAll() {
+    public List<MyTask> getList() {
         return this.items;
     }
 

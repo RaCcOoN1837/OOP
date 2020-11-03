@@ -7,13 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import com.example.mycourseproject.Activities.EditTaskActivity;
+import com.example.mycourseproject.Activities.MainActivity;
+
+import java.util.Collections;
 
 /*
     Экран редактирования задания.
@@ -21,12 +23,9 @@ import java.util.ArrayList;
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> {
 
     Context context;
-//    ArrayList<MyTask> tasks;
 
-//    public TaskAdapter(Context context, ArrayList<MyTask> tasks) {
     public TaskAdapter(Context context) {
         this.context = context;
-//        this.tasks = tasks;
     }
 
     // Класс единичного элемента RecyclerView.
@@ -36,7 +35,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
         TextView tvTitle, tvDescription, tvDate;
         ConstraintLayout clickArea;
         CheckBox checkbox;
-        String key;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -66,45 +64,27 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 
         myViewHolder.tvTitle.setText(myTask.getTitle());
         myViewHolder.tvDescription.setText(myTask.getDescription());
-        myViewHolder.tvDate.setText(myTask.getDate());
-
-        /*
-            НЕ РАБОТАЕТ!!!
-         */
-        myViewHolder.checkbox.setActivated(true);
-
-        // Получаем параметры изменяемого задания.
-        final String currentTitle = myTask.getTitle();
-        final String currentDescription = myTask.getDescription();
-        final String currentDate = myTask.getDate();
-        final boolean currentIsDone = myTask.isDone();
-        final String currentId = myTask.getId();
+        myViewHolder.tvDate.setText(myTask.getDate().toString());
+        if (myTask.isDone()) {
+            myViewHolder.checkbox.toggle();
+        }
 
         // Открываем форму редактирования задания по нажатию на область текста.
         myViewHolder.clickArea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, EditTaskActivity.class);
-                intent.putExtra("title", currentTitle);
-                intent.putExtra("description", currentDescription);
-                intent.putExtra("date", currentDate);
-//                intent.putExtra("isDone", currentIsDone);
-                intent.putExtra("id", currentId);
 
-                // Передаем индекс задания в EditTaskActivity.
+                Intent intent = new Intent(context, EditTaskActivity.class);
                 intent.putExtra("position", position);
                 context.startActivity(intent);
-
             }
         });
 
         myViewHolder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                /*
-                    РЕАЛИЗОВАТЬ!!!
-                 */
+                myTask.setDone(isChecked);
+                Collections.sort(Storage.getStorage().getList(), new CustomComparator());
             }
         });
     }

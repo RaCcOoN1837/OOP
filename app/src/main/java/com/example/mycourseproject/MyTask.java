@@ -1,11 +1,9 @@
 package com.example.mycourseproject;
 
-import java.util.Calendar;
-
 /*
     Класс "Задание".
  */
-public class MyTask implements Comparable<MyTask>{
+public class MyTask {
 
     // Поля.
     private String title;
@@ -70,14 +68,14 @@ public class MyTask implements Comparable<MyTask>{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        MyTask task = (MyTask) o;
+        MyTask myTask = (MyTask) o;
 
-        if (isDone != task.isDone) return false;
-        if (title != null ? !title.equals(task.title) : task.title != null) return false;
-        if (description != null ? !description.equals(task.description) : task.description != null)
+        if (isDone != myTask.isDone) return false;
+        if (title != null ? !title.equals(myTask.title) : myTask.title != null) return false;
+        if (description != null ? !description.equals(myTask.description) : myTask.description != null)
             return false;
-        if (date != null ? !date.equals(task.date) : task.date != null) return false;
-        return id != null ? id.equals(task.id) : task.id == null;
+        if (date != null ? !date.equals(myTask.date) : myTask.date != null) return false;
+        return id != null ? id.equals(myTask.id) : myTask.id == null;
     }
 
     @Override
@@ -88,12 +86,5 @@ public class MyTask implements Comparable<MyTask>{
         result = 31 * result + (isDone ? 1 : 0);
         result = 31 * result + (id != null ? id.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public int compareTo(MyTask o) {
-
-        // РЕАЛИЗОВАТЬ ДЛЯ СОРТИРОВКИ ЗАДАНИЙ В СПИСКЕ.
-        return 0;
     }
 }

@@ -1,4 +1,4 @@
-package com.example.mycourseproject;
+package com.example.mycourseproject.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -14,12 +14,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DatabaseReference;
+import com.example.mycourseproject.CustomComparator;
+import com.example.mycourseproject.DatePickerFragment;
+import com.example.mycourseproject.MyTask;
+import com.example.mycourseproject.R;
+import com.example.mycourseproject.Storage;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Random;
+import java.util.Collections;
 
 /*
     Экран добавления нового задания.
@@ -44,7 +47,7 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
         btnAddTask = findViewById(R.id.NEWbtnAddTask);
         btnCancel = findViewById(R.id.NEWbtnCancel);
 
-        // Открытие календаря по нажатию на кнопку Календарь.
+        // Открываем календарь.
         tvDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,7 +57,7 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
             }
         });
 
-        // Возвращение на главный экран по нажатию кнопки "Отмена".
+        // Отмена (Возвращаемся на главный экран).
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +67,7 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
             }
         });
 
-        // Добавление задания по нажатию кнопки "Добавить".
+        // Добавляем задание.
         btnAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,14 +76,14 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
                 String newDescription = etDescription.getText().toString();
                 String newDate = tvDate.getText().toString();
 
-
-
                 if ((!newTitle.equals("")) && (!newDate.equals(""))) {
 
                     // Создаем новое задание.
                     MyTask myTask = new MyTask(newTitle, newDescription, newDate, false, "777");
-                    Storage.getStorage().add(myTask);
 
+                    // Добавляем его в список.
+                    Storage.getStorage().add(myTask);
+                    Collections.sort(Storage.getStorage().getList() , new CustomComparator());
                     // Возвращаемся на главный экран.
                     startActivity(new Intent(NewTaskActivity.this, MainActivity.class));
                 } else {
