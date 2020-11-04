@@ -23,6 +23,7 @@ import com.example.mycourseproject.Storage;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 
 /*
     Экран добавления нового задания.
@@ -33,6 +34,8 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
     TextView tvDate;
     EditText etTitle, etDescription;
     Button btnAddTask, btnCancel;
+
+    Date tempDate;
 
     // При открытии экрана:
     @Override
@@ -74,16 +77,19 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
 
                 String newTitle = etTitle.getText().toString();
                 String newDescription = etDescription.getText().toString();
-                String newDate = tvDate.getText().toString();
+                Date newDate = tempDate;
 
-                if ((!newTitle.equals("")) && (!newDate.equals(""))) {
+                // Задания без названия нам не нужны.
+                if (!newTitle.equals("")) {
 
-                    // Создаем новое задание.
-                    MyTask myTask = new MyTask(newTitle, newDescription, newDate, false, "777");
-
-                    // Добавляем его в список.
+                    // Создаем новое задание и добавляем его в список.
+                    MyTask myTask = new MyTask(newTitle, newDescription, newDate, false, 0);
+                    myTask.setId(myTask.getDate().getTime());
                     Storage.getStorage().add(myTask);
+
+                    // Сортируем коллекцию.
                     Collections.sort(Storage.getStorage().getList() , new CustomComparator());
+
                     // Возвращаемся на главный экран.
                     startActivity(new Intent(NewTaskActivity.this, MainActivity.class));
                 } else {
@@ -108,6 +114,7 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd");
         String currentDate = dateFormat.format(calendar.getTime());
 
+        tempDate = calendar.getTime();
         tvDate.setText(currentDate);
     }
 }

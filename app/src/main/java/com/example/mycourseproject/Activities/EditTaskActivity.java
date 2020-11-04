@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mycourseproject.CustomComparator;
 import com.example.mycourseproject.DatePickerFragment;
 import com.example.mycourseproject.MyTask;
 import com.example.mycourseproject.R;
@@ -21,6 +22,8 @@ import com.example.mycourseproject.Storage;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
 
 public class EditTaskActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
@@ -28,6 +31,8 @@ public class EditTaskActivity extends AppCompatActivity implements DatePickerDia
     TextView tvDate;
     EditText etTitle, etDescription;
     Button btnSave, btnDelete, btnCancel;
+
+    Date tempDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +53,8 @@ public class EditTaskActivity extends AppCompatActivity implements DatePickerDia
 
         etTitle.setText(myTask.getTitle());
         etDescription.setText(myTask.getDescription());
-        tvDate.setText(myTask.getDate());
-        final String id = myTask.getId();
+//        tvDate.setText(myTask.getDate());
+        final long id = myTask.getId();
         final boolean isDone = myTask.isDone();
 
         // Открываем календарь.
@@ -67,6 +72,7 @@ public class EditTaskActivity extends AppCompatActivity implements DatePickerDia
             @Override
             public void onClick(View v) {
 
+                // Возвращаемся на главный экран.
                 startActivity(new Intent(EditTaskActivity.this, MainActivity.class));
             }
         });
@@ -78,8 +84,9 @@ public class EditTaskActivity extends AppCompatActivity implements DatePickerDia
 
                 // Получаем переданный индекс.
                 int position = getIntent().getIntExtra("position", 0);
-                MyTask myTask = Storage.getStorage().get(position);
 
+                // Удаляем задание из списка.
+                MyTask myTask = Storage.getStorage().get(position);
                 Storage.getStorage().remove(myTask);
 
                 startActivity(new Intent(EditTaskActivity.this, MainActivity.class));
@@ -93,16 +100,23 @@ public class EditTaskActivity extends AppCompatActivity implements DatePickerDia
 
                 String newTitle = etTitle.getText().toString();
                 String newDescription = etDescription.getText().toString();
-                String newDate = tvDate.getText().toString();
+                Date newDate = tempDate;
+                long newId = newDate.getTime();
 
                 if ((!newTitle.equals("")) && (!newDate.equals(""))) {
 
+                    // Получаем переданный индекс.
                     int position = getIntent().getIntExtra("position", 0);
-                    MyTask myTask = Storage.getStorage().get(position);
 
+                    // Изменяем задание.
+                    MyTask myTask = Storage.getStorage().get(position);
                     myTask.setTitle(newTitle);
                     myTask.setDescription(newDescription);
                     myTask.setDate(newDate);
+                    myTask.setId(newId);
+
+                    // Сортируем список.
+                    Collections.sort(Storage.getStorage().getList(), new CustomComparator());
 
                     // Возвращаемся на главный экран.
                     startActivity(new Intent(EditTaskActivity.this, MainActivity.class));
@@ -128,6 +142,7 @@ public class EditTaskActivity extends AppCompatActivity implements DatePickerDia
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd");
         String currentDate = dateFormat.format(calendar.getTime());
 
+        tempDate = calendar.getTime();
         tvDate.setText(currentDate);
     }
 }

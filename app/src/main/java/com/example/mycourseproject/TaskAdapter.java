@@ -13,13 +13,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mycourseproject.Activities.EditTaskActivity;
-import com.example.mycourseproject.Activities.MainActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 
-/*
-    Экран редактирования задания.
- */
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> {
 
     Context context;
@@ -61,10 +58,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, final int position) {
 
         final MyTask myTask = Storage.getStorage().get(position);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd");
 
         myViewHolder.tvTitle.setText(myTask.getTitle());
         myViewHolder.tvDescription.setText(myTask.getDescription());
-        myViewHolder.tvDate.setText(myTask.getDate().toString());
+        myViewHolder.tvDate.setText(dateFormat.format(myTask.getDate()));
         if (myTask.isDone()) {
             myViewHolder.checkbox.toggle();
         }
@@ -74,9 +72,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(context, EditTaskActivity.class);
-                intent.putExtra("position", position);
-                context.startActivity(intent);
+                // Редактировать разрешено только невыполненные задания.
+                if (!myTask.isDone()) {
+
+                    Intent intent = new Intent(context, EditTaskActivity.class);
+                    intent.putExtra("position", position);
+                    context.startActivity(intent);
+                }
             }
         });
 
@@ -84,7 +86,18 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 myTask.setDone(isChecked);
-                Collections.sort(Storage.getStorage().getList(), new CustomComparator());
+
+                /*
+                    Редактируем ID задания в зависимости от его статуса
+                    (Нужно для корректной сортировки заданий в списке)
+                 */
+                if (isChecked) {
+                    long newId = myTask.getId() + 1000000000000L;
+                    myTask.setId(newId);
+                } else if (!isChecked) {
+                    long newId = myTask.getId() - 1000000000000L;
+                    myTask.setId(newId);
+                }
             }
         });
     }

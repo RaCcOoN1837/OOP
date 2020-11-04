@@ -18,6 +18,7 @@ import com.example.mycourseproject.Storage;
 import com.example.mycourseproject.TaskAdapter;
 
 import java.util.Collections;
+import java.util.Date;
 
 /*
     Главный экран.
@@ -51,11 +52,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        Storage.getStorage().add(new MyTask("Выполнено", "Описание", "Nov 04", true, "999"));
-//        Storage.getStorage().add(new MyTask("Не выполнено", "Описание", "Nov 04", false, "999"));
-//        Storage.getStorage().add(new MyTask("Выполнено", "Описание", "Nov 04", true, "999"));
-//        Storage.getStorage().add(new MyTask("Не выполнено", "Описание", "Nov 04", false, "999"));
-//        Collections.sort(Storage.getStorage().getList(), new CustomComparator());
+        Collections.sort(Storage.getStorage().getList(), new CustomComparator());
         taskAdapter.notifyDataSetChanged(); // Уведомляем об изменениях.
     }
 }

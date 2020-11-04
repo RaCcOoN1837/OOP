@@ -6,7 +6,7 @@ import java.util.List;
 public class Storage {
     private static final Storage INST = new Storage();
 
-    private final List<MyTask> items = new ArrayList<>();
+    private final List<MyTask> tasks = new ArrayList<>();
 
     private Storage() {
     }
@@ -16,22 +16,22 @@ public class Storage {
     }
 
     public void add(MyTask myTask) {
-        this.items.add(myTask);
+        this.tasks.add(myTask);
     }
 
     public void remove(MyTask myTask) {
-        this.items.remove(myTask);
+        this.tasks.remove(myTask);
     }
 
     public List<MyTask> getList() {
-        return this.items;
+        return this.tasks;
     }
 
     public int size() {
-        return this.items.size();
+        return this.tasks.size();
     }
 
     public MyTask get(int index) {
-        return this.items.get(index);
+        return this.tasks.get(index);
     }
 }

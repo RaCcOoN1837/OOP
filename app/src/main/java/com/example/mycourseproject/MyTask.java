@@ -1,5 +1,8 @@
 package com.example.mycourseproject;
 
+import java.util.Calendar;
+import java.util.Date;
+
 /*
     Класс "Задание".
  */
@@ -8,14 +11,14 @@ public class MyTask {
     // Поля.
     private String title;
     private String description;
-    private String date;
+    private Date date;
     private boolean isDone;
-    private String id;
+    private long id;
 
     public MyTask() {
     }
 
-    public MyTask(String title, String description, String date, boolean isDone, String id) {
+    public MyTask(String title, String description, Date date, boolean isDone, long id) {
         this.title = title;
         this.description = description;
         this.date = date;
@@ -39,11 +42,11 @@ public class MyTask {
         this.description = description;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -55,11 +58,11 @@ public class MyTask {
         isDone = done;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -71,11 +74,11 @@ public class MyTask {
         MyTask myTask = (MyTask) o;
 
         if (isDone != myTask.isDone) return false;
+        if (id != myTask.id) return false;
         if (title != null ? !title.equals(myTask.title) : myTask.title != null) return false;
         if (description != null ? !description.equals(myTask.description) : myTask.description != null)
             return false;
-        if (date != null ? !date.equals(myTask.date) : myTask.date != null) return false;
-        return id != null ? id.equals(myTask.id) : myTask.id == null;
+        return date != null ? date.equals(myTask.date) : myTask.date == null;
     }
 
     @Override
@@ -84,7 +87,7 @@ public class MyTask {
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (isDone ? 1 : 0);
-        result = 31 * result + (id != null ? id.hashCode() : 0);
+        result = 31 * result + (int) (id ^ (id >>> 32));
         return result;
     }
 }
