@@ -13,6 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mycourseproject.Activities.EditTaskActivity;
+import com.example.mycourseproject.Activities.MainActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -98,6 +99,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
                     long newId = myTask.getId() - 1000000000000L;
                     myTask.setId(newId);
                 }
+
+                Intent intent = new Intent(context, MainActivity.class);
+                context.startActivity(intent);
             }
         });
     }
