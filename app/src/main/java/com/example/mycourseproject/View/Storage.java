@@ -1,4 +1,4 @@
-package com.example.mycourseproject;
+package com.example.mycourseproject.View;
 
 import java.util.ArrayList;
 import java.util.List;

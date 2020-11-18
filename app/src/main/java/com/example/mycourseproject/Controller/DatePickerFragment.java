@@ -1,4 +1,4 @@
-package com.example.mycourseproject;
+package com.example.mycourseproject.Controller;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

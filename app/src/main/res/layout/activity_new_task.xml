@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/customDarkGray"
     android:orientation="vertical"
-    tools:context=".Activities.MainActivity">
+    tools:context=".Controller.MainActivity">
 
     <!-- "Новое задание" -->
     <TextView

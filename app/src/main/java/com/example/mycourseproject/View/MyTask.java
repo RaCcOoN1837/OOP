@@ -1,6 +1,5 @@
-package com.example.mycourseproject;
+package com.example.mycourseproject.View;
 
-import java.util.Calendar;
 import java.util.Date;
 
 /*

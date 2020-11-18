@@ -1,4 +1,4 @@
-package com.example.mycourseproject.Activities;
+package com.example.mycourseproject.Controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -14,11 +14,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mycourseproject.CustomComparator;
-import com.example.mycourseproject.DatePickerFragment;
-import com.example.mycourseproject.MyTask;
+import com.example.mycourseproject.View.MyTask;
 import com.example.mycourseproject.R;
-import com.example.mycourseproject.Storage;
+import com.example.mycourseproject.View.Storage;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -32,7 +30,7 @@ public class EditTaskActivity extends AppCompatActivity implements DatePickerDia
     EditText etTitle, etDescription;
     Button btnSave, btnDelete, btnCancel;
 
-    Date tempDate;
+    Date currentDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +47,12 @@ public class EditTaskActivity extends AppCompatActivity implements DatePickerDia
 
         // Получаем параметры выбраного задания.
         int position = getIntent().getIntExtra("position", 0);
-        MyTask myTask = Storage.getStorage().get(position);
+        final MyTask myTask = Storage.getStorage().get(position);
 
         etTitle.setText(myTask.getTitle());
         etDescription.setText(myTask.getDescription());
-//        tvDate.setText(myTask.getDate());
-        final long id = myTask.getId();
-        final boolean isDone = myTask.isDone();
+        currentDate = myTask.getDate();
+        tvDate.setText(new SimpleDateFormat("MMM dd").format(currentDate));
 
         // Открываем календарь.
         tvDate.setOnClickListener(new View.OnClickListener() {
@@ -86,7 +83,7 @@ public class EditTaskActivity extends AppCompatActivity implements DatePickerDia
                 int position = getIntent().getIntExtra("position", 0);
 
                 // Удаляем задание из списка.
-                MyTask myTask = Storage.getStorage().get(position);
+//                MyTask myTask = Storage.getStorage().get(position);
                 Storage.getStorage().remove(myTask);
 
                 startActivity(new Intent(EditTaskActivity.this, MainActivity.class));
@@ -100,16 +97,17 @@ public class EditTaskActivity extends AppCompatActivity implements DatePickerDia
 
                 String newTitle = etTitle.getText().toString();
                 String newDescription = etDescription.getText().toString();
-                Date newDate = tempDate;
-                long newId = newDate.getTime();
 
-                if ((!newTitle.equals("")) && (!newDate.equals(""))) {
+                if ((!newTitle.equals("")) && (currentDate != null)) {
+
+                    Date newDate = currentDate;
+                    long newId = newDate.getTime();
 
                     // Получаем переданный индекс.
                     int position = getIntent().getIntExtra("position", 0);
 
                     // Изменяем задание.
-                    MyTask myTask = Storage.getStorage().get(position);
+//                    MyTask myTask = Storage.getStorage().get(position);
                     myTask.setTitle(newTitle);
                     myTask.setDescription(newDescription);
                     myTask.setDate(newDate);
@@ -120,6 +118,7 @@ public class EditTaskActivity extends AppCompatActivity implements DatePickerDia
 
                     // Возвращаемся на главный экран.
                     startActivity(new Intent(EditTaskActivity.this, MainActivity.class));
+
                 } else {
 
                     // Показываем уведомление об ошибке.
@@ -139,10 +138,7 @@ public class EditTaskActivity extends AppCompatActivity implements DatePickerDia
         calendar.set(Calendar.MONTH, month);
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd");
-        String currentDate = dateFormat.format(calendar.getTime());
-
-        tempDate = calendar.getTime();
-        tvDate.setText(currentDate);
+        this.currentDate = calendar.getTime();
+        tvDate.setText(new SimpleDateFormat("MMM dd").format(currentDate));
     }
 }

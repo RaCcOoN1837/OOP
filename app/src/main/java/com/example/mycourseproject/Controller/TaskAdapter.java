@@ -1,4 +1,4 @@
-package com.example.mycourseproject;
+package com.example.mycourseproject.Controller;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,11 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mycourseproject.Activities.EditTaskActivity;
-import com.example.mycourseproject.Activities.MainActivity;
+import com.example.mycourseproject.View.MyTask;
+import com.example.mycourseproject.R;
+import com.example.mycourseproject.View.Storage;
 
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> {
 

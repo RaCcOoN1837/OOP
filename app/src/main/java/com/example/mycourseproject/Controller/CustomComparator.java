@@ -1,4 +1,6 @@
-package com.example.mycourseproject;
+package com.example.mycourseproject.Controller;
+
+import com.example.mycourseproject.View.MyTask;
 
 import java.util.Comparator;
 

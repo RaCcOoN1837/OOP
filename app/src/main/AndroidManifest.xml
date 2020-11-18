@@ -9,10 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.EditTaskActivity" />
-        <activity android:name=".Activities.NewTaskActivity" />
+        <activity android:name=".Controller.EditTaskActivity" />
+        <activity android:name=".Controller.NewTaskActivity" />
         <activity
-            android:name=".Activities.MainActivity"
+            android:name=".Controller.MainActivity"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

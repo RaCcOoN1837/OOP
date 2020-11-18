@@ -1,4 +1,4 @@
-package com.example.mycourseproject.Activities;
+package com.example.mycourseproject.Controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,14 +11,10 @@ import android.view.View;
 import com.airbnb.lottie.LottieAnimationView;
 
 
-import com.example.mycourseproject.CustomComparator;
-import com.example.mycourseproject.MyTask;
 import com.example.mycourseproject.R;
-import com.example.mycourseproject.Storage;
-import com.example.mycourseproject.TaskAdapter;
+import com.example.mycourseproject.View.Storage;
 
 import java.util.Collections;
-import java.util.Date;
 
 /*
     Главный экран.
