@@ -93,11 +93,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
                     (Нужно для корректной сортировки заданий в списке)
                  */
                 if (isChecked) {
-                    long newId = myTask.getId() + 1000000000000L;
-                    myTask.setId(newId);
+                    myTask.setId(myTask.getId() + 1000000000000L);
                 } else if (!isChecked) {
-                    long newId = myTask.getId() - 1000000000000L;
-                    myTask.setId(newId);
+                    myTask.setId(myTask.getId() - 1000000000000L);
                 }
 
                 Intent intent = new Intent(context, MainActivity.class);

@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         this.recyclerView.setAdapter(taskAdapter); // Устанавливаем адаптер для нашего RecyclerView.
 
-        // Открываем форму добавления задания по нажатию кнопки "Создать".
+        // Открываем форму добавления задания по нажатию кнопки "+".
         btnAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Collections.sort(Storage.getStorage().getList(), new CustomComparator());
+        Collections.sort(Storage.getStorage().getList());
         taskAdapter.notifyDataSetChanged(); // Уведомляем об изменениях.
     }
 }

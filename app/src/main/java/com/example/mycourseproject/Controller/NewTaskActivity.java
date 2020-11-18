@@ -84,9 +84,6 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
                     myTask.setId(myTask.getDate().getTime());
                     Storage.getStorage().add(myTask);
 
-                    // Сортируем коллекцию.
-                    Collections.sort(Storage.getStorage().getList() , new CustomComparator());
-
                     // Возвращаемся на главный экран.
                     startActivity(new Intent(NewTaskActivity.this, MainActivity.class));
                 } else {

@@ -1,11 +1,12 @@
 package com.example.mycourseproject.View;
 
+import java.util.Comparator;
 import java.util.Date;
 
 /*
     Класс "Задание".
  */
-public class MyTask {
+public class MyTask implements Comparable<MyTask> {
 
     // Поля.
     private String title;
@@ -88,5 +89,16 @@ public class MyTask {
         result = 31 * result + (isDone ? 1 : 0);
         result = 31 * result + (int) (id ^ (id >>> 32));
         return result;
+    }
+
+    @Override
+    public int compareTo(MyTask o) {
+        if (this.getId() > o.getId()) {
+            return 1;
+        } else if (this.getId() < o.getId()) {
+            return -1;
+        } else {
+            return 0;
+        }
     }
 }

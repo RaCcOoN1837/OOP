@@ -74,23 +74,20 @@ public class EditTaskActivity extends AppCompatActivity implements DatePickerDia
             }
         });
 
-        // Удаляем задание
+        // Удаляем задание.
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                // Получаем переданный индекс.
-                int position = getIntent().getIntExtra("position", 0);
-
                 // Удаляем задание из списка.
-//                MyTask myTask = Storage.getStorage().get(position);
                 Storage.getStorage().remove(myTask);
 
+                // Возвращаемся на главный экран.
                 startActivity(new Intent(EditTaskActivity.this, MainActivity.class));
             }
         });
 
-        // Изменяем задание
+        // Изменяем задание.
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,18 +100,11 @@ public class EditTaskActivity extends AppCompatActivity implements DatePickerDia
                     Date newDate = currentDate;
                     long newId = newDate.getTime();
 
-                    // Получаем переданный индекс.
-                    int position = getIntent().getIntExtra("position", 0);
-
                     // Изменяем задание.
-//                    MyTask myTask = Storage.getStorage().get(position);
                     myTask.setTitle(newTitle);
                     myTask.setDescription(newDescription);
                     myTask.setDate(newDate);
                     myTask.setId(newId);
-
-                    // Сортируем список.
-                    Collections.sort(Storage.getStorage().getList(), new CustomComparator());
 
                     // Возвращаемся на главный экран.
                     startActivity(new Intent(EditTaskActivity.this, MainActivity.class));
