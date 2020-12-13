@@ -12,18 +12,23 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mycourseproject.View.MyTask;
+import com.example.mycourseproject.Model.DBHelper;
+import com.example.mycourseproject.Model.MyTask;
 import com.example.mycourseproject.R;
-import com.example.mycourseproject.View.Storage;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> {
 
     Context context;
+    private DBHelper helper;
+    List<MyTask> list = new ArrayList<>();
 
-    public TaskAdapter(Context context) {
+    public TaskAdapter(Context context, List<MyTask> list) {
         this.context = context;
+        this.list = list;
     }
 
     // Класс единичного элемента RecyclerView.
@@ -58,13 +63,23 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, final int position) {
 
-        final MyTask myTask = Storage.getStorage().get(position);
+        helper = new DBHelper(context);
+
+        final MyTask myTask = list.get(position);
+
+        // Сохраняем текущий ID, так как он нам пригодится в дальнейшем.
+        final long oldID = myTask.getId();
+
+        // Сделал свой формат даты - 3 буквы на месяц и 2 на число.
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd");
 
+        // Напоняем наш ViewHolder контентом соответствующего задания.
         myViewHolder.tvTitle.setText(myTask.getTitle());
         myViewHolder.tvDescription.setText(myTask.getDescription());
         myViewHolder.tvDate.setText(dateFormat.format(myTask.getDate()));
-        if (myTask.isDone()) {
+
+        // Активируем галку, если задание числится как выполненное.
+        if (myTask.getDone() == 1) {
             myViewHolder.checkbox.toggle();
         }
 
@@ -74,10 +89,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
             public void onClick(View v) {
 
                 // Редактировать разрешено только невыполненные задания.
-                if (!myTask.isDone()) {
+                if (myTask.getDone() == 0) {
 
+                    // Открываем activity для редактирования задания.
+                    // Не забываем впридачу положить ему ID задания.
                     Intent intent = new Intent(context, EditTaskActivity.class);
-                    intent.putExtra("position", position);
+                    intent.putExtra("id", myTask.getId());
                     context.startActivity(intent);
                 }
             }
@@ -86,18 +103,31 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
         myViewHolder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                myTask.setDone(isChecked);
+
+                // Меняем статус задания в зависимости от статуса галки его ViewHolder'a.
+                long done;
+                if (isChecked) {
+                    done = 1;
+                } else {
+                    done = 0;
+                }
+                myTask.setDone(done);
 
                 /*
                     Редактируем ID задания в зависимости от его статуса
+                    и обновляем данные в БД.
                     (Нужно для корректной сортировки заданий в списке)
                  */
-                if (isChecked) {
+                if (done == 1) {
                     myTask.setId(myTask.getId() + 1000000000000L);
-                } else if (!isChecked) {
+                    helper.updateStatus(myTask, oldID);
+
+                } else if (done == 0) {
                     myTask.setId(myTask.getId() - 1000000000000L);
+                    helper.updateStatus(myTask, oldID);
                 }
 
+                // Обновляем наше активити для отображения актуальных данных.
                 Intent intent = new Intent(context, MainActivity.class);
                 context.startActivity(intent);
             }
@@ -106,6 +136,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
 
     @Override
     public int getItemCount() {
-        return Storage.getStorage().size();
+        return this.list.size();
     }
 }

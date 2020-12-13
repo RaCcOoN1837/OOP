@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -14,13 +16,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mycourseproject.View.MyTask;
+import com.example.mycourseproject.Model.DBHelper;
+import com.example.mycourseproject.Model.MyTask;
 import com.example.mycourseproject.R;
-import com.example.mycourseproject.View.Storage;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 
 /*
@@ -33,13 +34,18 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
     EditText etTitle, etDescription;
     Button btnAddTask, btnCancel;
 
-    Date newDate;
+    long newDate;
+    private DBHelper helper;
+    private Context context;
 
     // При открытии экрана:
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_task);
+
+        context = this;
+        helper = new DBHelper(this);
 
         // Связываем наши компоненты с XML файлом.
         tvDate = findViewById(R.id.NEWtvDate);
@@ -79,10 +85,12 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
                 // Задания без названия нам не нужны.
                 if ((!newTitle.equals("")) && (!tvDate.getText().equals(""))) {
 
-                    // Создаем новое задание и добавляем его в список.
-                    MyTask myTask = new MyTask(newTitle, newDescription, newDate, false, 0);
-                    myTask.setId(myTask.getDate().getTime());
-                    Storage.getStorage().add(myTask);
+                    // Создаем новое задание.
+                    MyTask myTask = new MyTask(newTitle, newDescription, newDate, 0, 0);
+                    myTask.setId(myTask.getDate());
+
+                    // Записываем его в БД.
+                    helper.insertTask(myTask);
 
                     // Возвращаемся на главный экран.
                     startActivity(new Intent(NewTaskActivity.this, MainActivity.class));
@@ -105,7 +113,7 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
         calendar.set(Calendar.MONTH, month);
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-        this.newDate = calendar.getTime();
-        tvDate.setText(new SimpleDateFormat("MMM dd").format(newDate));
+        this.newDate = calendar.getTime().getTime();
+        tvDate.setText(new SimpleDateFormat("MMM dd").format(new Date(newDate)));
     }
 }

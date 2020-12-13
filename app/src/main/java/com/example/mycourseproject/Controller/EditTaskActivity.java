@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -14,13 +15,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mycourseproject.View.MyTask;
+import com.example.mycourseproject.Model.DBHelper;
+import com.example.mycourseproject.Model.MyTask;
 import com.example.mycourseproject.R;
-import com.example.mycourseproject.View.Storage;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 
 public class EditTaskActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
@@ -30,12 +30,17 @@ public class EditTaskActivity extends AppCompatActivity implements DatePickerDia
     EditText etTitle, etDescription;
     Button btnSave, btnDelete, btnCancel;
 
-    Date currentDate;
+    long currentDate;
+    private DBHelper helper;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_task);
+
+        context = this;
+        helper = new DBHelper(this);
 
         // Связываем наши компоненты с XML файлом.
         etTitle = findViewById(R.id.EDITetTitle);
@@ -45,14 +50,20 @@ public class EditTaskActivity extends AppCompatActivity implements DatePickerDia
         btnDelete = findViewById(R.id.EDITbtnDelete);
         btnCancel = findViewById(R.id.EDITbtnCancel);
 
-        // Получаем параметры выбраного задания.
-        int position = getIntent().getIntExtra("position", 0);
-        final MyTask myTask = Storage.getStorage().get(position);
+        // Получаем ID выбраного задания.
+        long currentID = getIntent().getLongExtra("id", 0);
 
+        // Получаем текущее задание по его ID.
+        final MyTask myTask = helper.getTask(currentID);
+
+        // Сохраняем текущий ID, так как он нам пригодится в дальнейшем.
+        final long oldID = myTask.getId();
+
+        // Отображаем текущие параметры задания в полях для редактирования.
         etTitle.setText(myTask.getTitle());
         etDescription.setText(myTask.getDescription());
         currentDate = myTask.getDate();
-        tvDate.setText(new SimpleDateFormat("MMM dd").format(currentDate));
+        tvDate.setText(new SimpleDateFormat("MMM dd").format(new Date(currentDate)));
 
         // Открываем календарь.
         tvDate.setOnClickListener(new View.OnClickListener() {
@@ -79,8 +90,8 @@ public class EditTaskActivity extends AppCompatActivity implements DatePickerDia
             @Override
             public void onClick(View v) {
 
-                // Удаляем задание из списка.
-                Storage.getStorage().remove(myTask);
+                // Удаляем задание из БД.
+                helper.deleteTask(myTask);
 
                 // Возвращаемся на главный экран.
                 startActivity(new Intent(EditTaskActivity.this, MainActivity.class));
@@ -95,16 +106,20 @@ public class EditTaskActivity extends AppCompatActivity implements DatePickerDia
                 String newTitle = etTitle.getText().toString();
                 String newDescription = etDescription.getText().toString();
 
-                if ((!newTitle.equals("")) && (currentDate != null)) {
+                // Проверка на пустые поля.
+                if ((!newTitle.equals("")) && (currentDate != 0)) {
 
-                    Date newDate = currentDate;
-                    long newId = newDate.getTime();
+                    long newDate = currentDate;
+                    long newId = newDate;
 
                     // Изменяем задание.
                     myTask.setTitle(newTitle);
                     myTask.setDescription(newDescription);
                     myTask.setDate(newDate);
                     myTask.setId(newId);
+
+                    // Обновляем задание в БД.
+                    helper.updateTask(myTask, oldID);
 
                     // Возвращаемся на главный экран.
                     startActivity(new Intent(EditTaskActivity.this, MainActivity.class));
@@ -128,7 +143,7 @@ public class EditTaskActivity extends AppCompatActivity implements DatePickerDia
         calendar.set(Calendar.MONTH, month);
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-        this.currentDate = calendar.getTime();
-        tvDate.setText(new SimpleDateFormat("MMM dd").format(currentDate));
+        this.currentDate = calendar.getTime().getTime();
+        tvDate.setText(new SimpleDateFormat("MMM dd").format(new Date(currentDate)));
     }
 }

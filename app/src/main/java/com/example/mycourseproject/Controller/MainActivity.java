@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,18 +12,25 @@ import android.view.View;
 import com.airbnb.lottie.LottieAnimationView;
 
 
+import com.example.mycourseproject.Model.DBHelper;
+import com.example.mycourseproject.Model.MyTask;
 import com.example.mycourseproject.R;
-import com.example.mycourseproject.View.Storage;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /*
     Главный экран.
  */
 public class MainActivity extends AppCompatActivity {
 
+    List<MyTask> list = new ArrayList<>();
+    private DBHelper helper;
+    private Context context;
+
     // Инифиализируем наши компоненты.
-    LottieAnimationView btnAddTask;
+    LottieAnimationView btnAddTask; // Анимированная чудо-кнопка.
     RecyclerView recyclerView; // Прокручиваемый список.
     TaskAdapter taskAdapter; // Адаптер. (Предназначен для отображения данных из list в RecyclerView)
 
@@ -31,11 +39,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main); // Подгружаем главный экран.
 
+        context = this;
+        helper = new DBHelper(this);
+
         // Связываем наши компоненты с XML файлом.
         this.btnAddTask = findViewById(R.id.STARTbtnAddTask);
-        this.taskAdapter = new TaskAdapter(this); // Создаем адаптер.
         this.recyclerView = findViewById(R.id.STARTtasks);
+
+        this.taskAdapter = new TaskAdapter(context, helper.getAllTasks()); // Создаем адаптер.
+        // Это дает определенный выигрыш в скорости разворачивания списка.
         this.recyclerView.setHasFixedSize(true);
+        // Задаем раскладчик - в данном случае - по вертикали.
         this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         this.recyclerView.setAdapter(taskAdapter); // Устанавливаем адаптер для нашего RecyclerView.
 
@@ -48,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Collections.sort(Storage.getStorage().getList());
+        Collections.sort(list); // Сортируем список заданий.
         taskAdapter.notifyDataSetChanged(); // Уведомляем об изменениях.
     }
 }

@@ -1,7 +1,4 @@
-package com.example.mycourseproject.View;
-
-import java.util.Comparator;
-import java.util.Date;
+package com.example.mycourseproject.Model;
 
 /*
     Класс "Задание".
@@ -11,18 +8,18 @@ public class MyTask implements Comparable<MyTask> {
     // Поля.
     private String title;
     private String description;
-    private Date date;
-    private boolean isDone;
+    private long date;
+    private long done;
     private long id;
 
     public MyTask() {
     }
 
-    public MyTask(String title, String description, Date date, boolean isDone, long id) {
+    public MyTask(String title, String description, long date, long done, long id) {
         this.title = title;
         this.description = description;
         this.date = date;
-        this.isDone = isDone;
+        this.done = done;
         this.id = id;
     }
 
@@ -42,20 +39,20 @@ public class MyTask implements Comparable<MyTask> {
         this.description = description;
     }
 
-    public Date getDate() {
+    public long getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(long date) {
         this.date = date;
     }
 
-    public boolean isDone() {
-        return isDone;
+    public long getDone() {
+        return done;
     }
 
-    public void setDone(boolean done) {
-        isDone = done;
+    public void setDone(long done) {
+        this.done = done;
     }
 
     public long getId() {
@@ -73,20 +70,19 @@ public class MyTask implements Comparable<MyTask> {
 
         MyTask myTask = (MyTask) o;
 
-        if (isDone != myTask.isDone) return false;
+        if (date != myTask.date) return false;
+        if (done != myTask.done) return false;
         if (id != myTask.id) return false;
         if (title != null ? !title.equals(myTask.title) : myTask.title != null) return false;
-        if (description != null ? !description.equals(myTask.description) : myTask.description != null)
-            return false;
-        return date != null ? date.equals(myTask.date) : myTask.date == null;
+        return description != null ? description.equals(myTask.description) : myTask.description == null;
     }
 
     @Override
     public int hashCode() {
         int result = title != null ? title.hashCode() : 0;
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (date != null ? date.hashCode() : 0);
-        result = 31 * result + (isDone ? 1 : 0);
+        result = 31 * result + (int) (date ^ (date >>> 32));
+        result = 31 * result + (int) (done ^ (done >>> 32));
         result = 31 * result + (int) (id ^ (id >>> 32));
         return result;
     }
