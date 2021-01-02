@@ -15,7 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mycourseproject.Model.DBHelper;
+import com.example.mycourseproject.Model.Storage.DBHelper;
 import com.example.mycourseproject.Model.MyTask;
 import com.example.mycourseproject.R;
 
@@ -26,11 +26,11 @@ import java.util.Date;
 public class EditTaskActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     // Инициализируем наши компоненты.
-    TextView tvDate;
-    EditText etTitle, etDescription;
-    Button btnSave, btnDelete, btnCancel;
+    private TextView tvDate;
+    private EditText etTitle, etDescription;
+    private Button btnSave, btnDelete, btnCancel;
 
-    long currentDate;
+    private long currentDate;
     private DBHelper helper;
     private Context context;
 
@@ -145,5 +145,10 @@ public class EditTaskActivity extends AppCompatActivity implements DatePickerDia
 
         this.currentDate = calendar.getTime().getTime();
         tvDate.setText(new SimpleDateFormat("MMM dd").format(new Date(currentDate)));
+    }
+
+    @Override
+    public void onBackPressed() {
+        // "Парализуем" кнопку "Назад", так как все необходимые кнопки у нас имеются.
     }
 }

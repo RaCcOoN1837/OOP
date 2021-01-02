@@ -1,18 +1,17 @@
-package com.example.mycourseproject.Model;
+package com.example.mycourseproject.Model.Storage;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.example.mycourseproject.Model.MyTask;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -87,6 +86,14 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * Метод для удаления всей БД.
+     */
+    public void clearDataBase() {
+        db = this.getWritableDatabase();
+        db.delete(MyConstants.TABLE_NAME , null, null);
+    }
+
+    /**
      * Метод для получения задания из БД.
      */
     public MyTask getTask(long id) {
@@ -96,6 +103,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.beginTransaction();
         try {
+            // Этот запрос вернет 1 строку таблицы с указанным ID.
             cursor = db.query(MyConstants.TABLE_NAME , null , "ID = ?", new String[] { String.valueOf(id) } , null , null , null);
             if (cursor !=null){
                 if (cursor.moveToFirst()){
@@ -127,6 +135,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.beginTransaction();
         try {
+            // Этот запрос вернет все строки таблицы.
             cursor = db.query(MyConstants.TABLE_NAME , null , null , null , null , null , null);
             if (cursor !=null){
                 if (cursor.moveToFirst()){

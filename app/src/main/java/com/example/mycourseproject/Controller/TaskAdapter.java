@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mycourseproject.Model.DBHelper;
+import com.example.mycourseproject.Model.Storage.DBHelper;
 import com.example.mycourseproject.Model.MyTask;
 import com.example.mycourseproject.R;
 
@@ -22,9 +22,9 @@ import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> {
 
-    Context context;
+    private Context context;
     private DBHelper helper;
-    List<MyTask> list = new ArrayList<>();
+    private List<MyTask> list = new ArrayList<>();
 
     public TaskAdapter(Context context, List<MyTask> list) {
         this.context = context;
@@ -35,9 +35,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         // Инициализируем наши компоненты.
-        TextView tvTitle, tvDescription, tvDate;
-        ConstraintLayout clickArea;
-        CheckBox checkbox;
+        private TextView tvTitle, tvDescription, tvDate;
+        private ConstraintLayout clickArea;
+        private CheckBox checkbox;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -1,4 +1,4 @@
-package com.example.mycourseproject.Model;
+package com.example.mycourseproject.Model.Storage;
 
 public class MyConstants {
 

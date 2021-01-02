@@ -6,7 +6,6 @@ import androidx.fragment.app.DialogFragment;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -16,7 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mycourseproject.Model.DBHelper;
+import com.example.mycourseproject.Model.Storage.DBHelper;
 import com.example.mycourseproject.Model.MyTask;
 import com.example.mycourseproject.R;
 
@@ -30,11 +29,11 @@ import java.util.Date;
 public class NewTaskActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     // Инифиализируем наши компоненты.
-    TextView tvDate;
-    EditText etTitle, etDescription;
-    Button btnAddTask, btnCancel;
+    private TextView tvDate;
+    private EditText etTitle, etDescription;
+    private Button btnAddTask, btnCancel;
 
-    long newDate;
+    private long newDate;
     private DBHelper helper;
     private Context context;
 
@@ -115,5 +114,10 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
 
         this.newDate = calendar.getTime().getTime();
         tvDate.setText(new SimpleDateFormat("MMM dd").format(new Date(newDate)));
+    }
+
+    @Override
+    public void onBackPressed() {
+        // "Парализуем" кнопку "Назад", так как все необходимые кнопки у нас имеются.
     }
 }

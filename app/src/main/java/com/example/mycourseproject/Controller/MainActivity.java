@@ -12,7 +12,7 @@ import android.view.View;
 import com.airbnb.lottie.LottieAnimationView;
 
 
-import com.example.mycourseproject.Model.DBHelper;
+import com.example.mycourseproject.Model.Storage.DBHelper;
 import com.example.mycourseproject.Model.MyTask;
 import com.example.mycourseproject.R;
 
@@ -25,14 +25,14 @@ import java.util.List;
  */
 public class MainActivity extends AppCompatActivity {
 
-    List<MyTask> list = new ArrayList<>();
+    private List<MyTask> list = new ArrayList<>();
     private DBHelper helper;
     private Context context;
 
     // Инифиализируем наши компоненты.
-    LottieAnimationView btnAddTask; // Анимированная чудо-кнопка.
-    RecyclerView recyclerView; // Прокручиваемый список.
-    TaskAdapter taskAdapter; // Адаптер. (Предназначен для отображения данных из list в RecyclerView)
+    private LottieAnimationView btnAddTask; // Анимированная чудо-кнопка.
+    private RecyclerView recyclerView; // Прокручиваемый список.
+    private TaskAdapter taskAdapter; // Адаптер. (Предназначен для отображения данных из list в RecyclerView)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,5 +64,10 @@ public class MainActivity extends AppCompatActivity {
 
         Collections.sort(list); // Сортируем список заданий.
         taskAdapter.notifyDataSetChanged(); // Уведомляем об изменениях.
+    }
+
+    @Override
+    public void onBackPressed() {
+        // "Парализуем" кнопку "Назад", так как все необходимые кнопки у нас имеются.
     }
 }
