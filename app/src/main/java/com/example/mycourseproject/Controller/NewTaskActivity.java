@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -17,15 +16,14 @@ import android.widget.Toast;
 
 import com.example.mycourseproject.Model.Storage.DBHelper;
 import com.example.mycourseproject.Model.MyTask;
+import com.example.mycourseproject.Model.Storage.TaskDBStorage;
+import com.example.mycourseproject.Model.Storage.TaskStorage;
 import com.example.mycourseproject.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-/*
-    Экран добавления нового задания.
- */
 public class NewTaskActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     // Инифиализируем наши компоненты.
@@ -34,7 +32,7 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
     private Button btnAddTask, btnCancel;
 
     private long newDate;
-    private DBHelper helper;
+    private TaskStorage storage;
 
     // При открытии экрана:
     @Override
@@ -49,7 +47,7 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
         btnAddTask = findViewById(R.id.NEWbtnAddTask);
         btnCancel = findViewById(R.id.NEWbtnCancel);
 
-        helper = new DBHelper(this);
+        storage = new TaskDBStorage();
 
         // Открываем календарь.
         tvDate.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +85,7 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
                     myTask.setId(myTask.getDate());
 
                     // Записываем его в БД.
-                    helper.insertTask(myTask);
+                    storage.insertTask(NewTaskActivity.this, myTask);
 
                     // Возвращаемся на главный экран.
                     startActivity(new Intent(NewTaskActivity.this, MainActivity.class));

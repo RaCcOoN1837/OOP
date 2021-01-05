@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mycourseproject.Model.Storage.DBHelper;
 import com.example.mycourseproject.Model.MyTask;
+import com.example.mycourseproject.Model.Storage.TaskDBStorage;
+import com.example.mycourseproject.Model.Storage.TaskStorage;
 import com.example.mycourseproject.R;
 
 import java.text.SimpleDateFormat;
@@ -23,8 +25,8 @@ import java.util.List;
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> {
 
     private Context context;
-    private DBHelper helper;
-    private List<MyTask> list = new ArrayList<>();
+    private TaskStorage storage;
+    private List<MyTask> list;
 
     public TaskAdapter(Context context, List<MyTask> list) {
         this.context = context;
@@ -63,7 +65,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, final int position) {
 
-        helper = new DBHelper(context);
+        storage = new TaskDBStorage();
 
         final MyTask myTask = list.get(position);
 
@@ -86,7 +88,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
             public void onClick(View v) {
 
                 // Редактировать разрешено только невыполненные задания.
-                if (myTask.isDone()) {
+                if (!myTask.isDone()) {
 
                     // Открываем activity для редактирования задания.
                     // Не забываем впридачу положить ему ID задания.
@@ -115,11 +117,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
                  */
                 if (myTask.isDone()) {
                     myTask.setId(myTask.getId() + 1000000000000L);
-                    helper.updateStatus(myTask, oldID);
+                    storage.updateStatus(context, myTask, oldID);
 
                 } else if (!myTask.isDone()) {
                     myTask.setId(myTask.getId() - 1000000000000L);
-                    helper.updateStatus(myTask, oldID);
+                    storage.updateStatus(context, myTask, oldID);
                 }
 
                 // Обновляем наше активити для отображения актуальных данных.

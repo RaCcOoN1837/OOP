@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -15,8 +14,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mycourseproject.Model.Storage.DBHelper;
 import com.example.mycourseproject.Model.MyTask;
+import com.example.mycourseproject.Model.Storage.TaskDBStorage;
+import com.example.mycourseproject.Model.Storage.TaskStorage;
 import com.example.mycourseproject.R;
 
 import java.text.SimpleDateFormat;
@@ -31,7 +31,7 @@ public class EditTaskActivity extends AppCompatActivity implements DatePickerDia
     private Button btnSave, btnDelete, btnCancel;
 
     private long currentDate;
-    private DBHelper helper;
+    private TaskStorage storage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +46,13 @@ public class EditTaskActivity extends AppCompatActivity implements DatePickerDia
         btnDelete = findViewById(R.id.EDITbtnDelete);
         btnCancel = findViewById(R.id.EDITbtnCancel);
 
-        helper = new DBHelper(this);
+        storage = new TaskDBStorage();
 
         // Получаем ID выбраного задания.
         final long currentID = getIntent().getLongExtra("id", 0);
 
         // Получаем текущее задание по его ID.
-        final MyTask myTask = helper.getTask(currentID);
+        final MyTask myTask = storage.getTask(this, currentID);
 
         // Отображаем текущие параметры задания в полях для редактирования.
         etTitle.setText(myTask.getTitle());
@@ -86,7 +86,7 @@ public class EditTaskActivity extends AppCompatActivity implements DatePickerDia
             public void onClick(View v) {
 
                 // Удаляем задание из БД.
-                helper.deleteTask(myTask);
+                storage.deleteTask(EditTaskActivity.this, myTask);
 
                 // Возвращаемся на главный экран.
                 startActivity(new Intent(EditTaskActivity.this, MainActivity.class));
@@ -113,7 +113,7 @@ public class EditTaskActivity extends AppCompatActivity implements DatePickerDia
                     myTask.setId(newId);
 
                     // Обновляем задание в БД.
-                    helper.updateTask(myTask, currentID);
+                    storage.updateTask(EditTaskActivity.this, myTask, currentID);
 
                     // Возвращаемся на главный экран.
                     startActivity(new Intent(EditTaskActivity.this, MainActivity.class));

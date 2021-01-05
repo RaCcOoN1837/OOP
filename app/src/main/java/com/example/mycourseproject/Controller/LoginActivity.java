@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mycourseproject.Model.Storage.DBHelper;
+import com.example.mycourseproject.Model.Storage.TaskDBStorage;
+import com.example.mycourseproject.Model.Storage.TaskStorage;
 import com.example.mycourseproject.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -24,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText tvPassword;
     private Button btnLogIn, btnResetPassword, btnOK, btnCancel;
     private SharedPreferences preferences;
-    private DBHelper helper;
+    private TaskStorage storage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         tvPassword = findViewById(R.id.LOGetpassword);
         btnLogIn = findViewById(R.id.LOGbtnsugnin);
         btnResetPassword = findViewById(R.id.LOGbtnresetpassword);
-        helper = new DBHelper(this);
+        storage = new TaskDBStorage();
 
         // Получаем переданный пароль.
         final String validPassword = getIntent().getStringExtra("password");
@@ -92,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                 editor.commit();
 
                 // Очищаем БД.
-                helper.clearDataBase();
+                storage.clearDataBase(LoginActivity.this);
 
                 // Переходим на окно регистрации.
                 startActivity(new Intent(LoginActivity.this, RegistrationActivity.class));

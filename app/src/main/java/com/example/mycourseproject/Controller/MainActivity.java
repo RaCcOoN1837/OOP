@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,19 +13,18 @@ import com.airbnb.lottie.LottieAnimationView;
 
 import com.example.mycourseproject.Model.Storage.DBHelper;
 import com.example.mycourseproject.Model.MyTask;
+import com.example.mycourseproject.Model.Storage.TaskDBStorage;
+import com.example.mycourseproject.Model.Storage.TaskStorage;
 import com.example.mycourseproject.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/*
-    Главный экран.
- */
 public class MainActivity extends AppCompatActivity {
 
     private List<MyTask> list = new ArrayList<>();
-    private DBHelper helper;
+    private TaskStorage storage;
 
     // Инифиализируем наши компоненты.
     private LottieAnimationView btnAddTask; // Анимированная чудо-кнопка.
@@ -42,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
         this.btnAddTask = findViewById(R.id.STARTbtnAddTask);
         this.recyclerView = findViewById(R.id.STARTtasks);
 
-        this.helper = new DBHelper(this);
-        this.taskAdapter = new TaskAdapter(this, helper.getAllTasks()); // Создаем адаптер.
+        this.storage = new TaskDBStorage();
+        this.taskAdapter = new TaskAdapter(this, storage.getAllTasks(this)); // Создаем адаптер.
         // Это дает определенный выигрыш в скорости разворачивания списка.
         this.recyclerView.setHasFixedSize(true);
         // Задаем раскладчик - в данном случае - по вертикали.

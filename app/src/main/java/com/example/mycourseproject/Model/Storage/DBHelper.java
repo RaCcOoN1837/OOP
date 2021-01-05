@@ -60,7 +60,7 @@ public class DBHelper extends SQLiteOpenHelper {
         database.update(MyConstants.TABLE_NAME , contentValues , "ID = ?" , new String[]{String.valueOf(oldID)});
     }
 
-    public void updateStatus(MyTask myTask, long oldID){
+    public void updateStatus(MyTask myTask, long oldID) {
         database = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(MyConstants.DONE, myTask.isDone());
