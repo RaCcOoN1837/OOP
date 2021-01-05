@@ -9,17 +9,17 @@ public class MyTask implements Comparable<MyTask> {
     private String title;
     private String description;
     private long date;
-    private long done;
+    private boolean isDone;
     private long id;
 
     public MyTask() {
     }
 
-    public MyTask(String title, String description, long date, long done, long id) {
+    public MyTask(String title, String description, long date, boolean isDone, long id) {
         this.title = title;
         this.description = description;
         this.date = date;
-        this.done = done;
+        this.isDone = isDone;
         this.id = id;
     }
 
@@ -47,12 +47,12 @@ public class MyTask implements Comparable<MyTask> {
         this.date = date;
     }
 
-    public long getDone() {
-        return done;
+    public boolean isDone() {
+        return isDone;
     }
 
-    public void setDone(long done) {
-        this.done = done;
+    public void setDone(boolean done) {
+        this.isDone = done;
     }
 
     public long getId() {
@@ -71,7 +71,7 @@ public class MyTask implements Comparable<MyTask> {
         MyTask myTask = (MyTask) o;
 
         if (date != myTask.date) return false;
-        if (done != myTask.done) return false;
+        if (isDone != myTask.isDone) return false;
         if (id != myTask.id) return false;
         if (title != null ? !title.equals(myTask.title) : myTask.title != null) return false;
         return description != null ? description.equals(myTask.description) : myTask.description == null;
@@ -82,7 +82,7 @@ public class MyTask implements Comparable<MyTask> {
         int result = title != null ? title.hashCode() : 0;
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (int) (date ^ (date >>> 32));
-        result = 31 * result + (int) (done ^ (done >>> 32));
+        result = 31 * result + (isDone ? 1 : 0);
         result = 31 * result + (int) (id ^ (id >>> 32));
         return result;
     }

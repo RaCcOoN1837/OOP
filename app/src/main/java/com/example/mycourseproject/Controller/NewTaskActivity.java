@@ -35,7 +35,6 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
 
     private long newDate;
     private DBHelper helper;
-    private Context context;
 
     // При открытии экрана:
     @Override
@@ -43,15 +42,14 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_task);
 
-        context = this;
-        helper = new DBHelper(this);
-
         // Связываем наши компоненты с XML файлом.
         tvDate = findViewById(R.id.NEWtvDate);
         etTitle = findViewById(R.id.NEWetTitle);
         etDescription = findViewById(R.id.NEWetDescription);
         btnAddTask = findViewById(R.id.NEWbtnAddTask);
         btnCancel = findViewById(R.id.NEWbtnCancel);
+
+        helper = new DBHelper(this);
 
         // Открываем календарь.
         tvDate.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +61,7 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
             }
         });
 
-        // Отмена (Возвращаемся на главный экран).
+        // "Отмена".
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +83,7 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
                 if ((!newTitle.equals("")) && (!tvDate.getText().equals(""))) {
 
                     // Создаем новое задание.
-                    MyTask myTask = new MyTask(newTitle, newDescription, newDate, 0, 0);
+                    MyTask myTask = new MyTask(newTitle, newDescription, newDate, false, 0);
                     myTask.setId(myTask.getDate());
 
                     // Записываем его в БД.

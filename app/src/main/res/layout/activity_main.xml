@@ -59,7 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/nunito_regular"
+        android:fontFamily="@font/hindsiliguri_regular"
         android:text="@string/tasks_is_over"
         android:textAlignment="center"
         android:textColor="@color/customWhite"

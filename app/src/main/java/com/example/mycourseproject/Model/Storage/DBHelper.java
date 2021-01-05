@@ -15,10 +15,10 @@ import java.util.List;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    private SQLiteDatabase db;
+    private SQLiteDatabase database;
 
     public DBHelper(@Nullable Context context) {
-        super(context, MyConstants.DB_NAME, null, MyConstants.DB_VERSION);
+        super(context, MyConstants.DATABASE_NAME, null, MyConstants.DATABASE_VERSION);
     }
 
     @Override
@@ -34,77 +34,59 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    /**
-     * Метод для добавления задания в БД.
-     */
     public void insertTask(MyTask myTask){
-        db = this.getWritableDatabase();
+        database = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(MyConstants.ID, myTask.getId());
         contentValues.put(MyConstants.TITLE, myTask.getTitle());
         contentValues.put(MyConstants.DESCRIPTION, myTask.getDescription());
         contentValues.put(MyConstants.DATE, myTask.getDate());
-        contentValues.put(MyConstants.DONE, myTask.getDone());
+        contentValues.put(MyConstants.DONE, myTask.isDone());
 
-        db.insert(MyConstants.TABLE_NAME , null , contentValues);
+        database.insert(MyConstants.TABLE_NAME , null , contentValues);
     }
 
-    /**
-     * Метод для обновления задания в БД.
-     */
     public void updateTask(MyTask myTask, long oldID) {
-        db = this.getWritableDatabase();
+        database = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(MyConstants.ID, myTask.getId());
         contentValues.put(MyConstants.TITLE, myTask.getTitle());
         contentValues.put(MyConstants.DESCRIPTION, myTask.getDescription());
         contentValues.put(MyConstants.DATE, myTask.getDate());
-        contentValues.put(MyConstants.DONE, myTask.getDone());
+        contentValues.put(MyConstants.DONE, myTask.isDone());
 
-        db.update(MyConstants.TABLE_NAME , contentValues , "ID = ?" , new String[]{String.valueOf(oldID)});
+        database.update(MyConstants.TABLE_NAME , contentValues , "ID = ?" , new String[]{String.valueOf(oldID)});
     }
 
-    /**
-     * Метод для обновления статуса задания в БД.
-     */
     public void updateStatus(MyTask myTask, long oldID){
-        db = this.getWritableDatabase();
+        database = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(MyConstants.DONE, myTask.getDone());
+        contentValues.put(MyConstants.DONE, myTask.isDone());
         contentValues.put(MyConstants.ID, myTask.getId());
-        db.update(MyConstants.TABLE_NAME , contentValues , "ID = ?" , new String[]{String.valueOf(oldID)});
+        database.update(MyConstants.TABLE_NAME , contentValues , "ID = ?" , new String[]{String.valueOf(oldID)});
     }
 
-    /**
-     * Метод для удаления задания из БД.
-     */
     public void deleteTask(MyTask myTask) {
-        db = this.getWritableDatabase();
-        db.delete(MyConstants.TABLE_NAME , "ID=?" , new String[]{String.valueOf(myTask.getId())});
+        database = this.getWritableDatabase();
+        database.delete(MyConstants.TABLE_NAME , "ID=?" , new String[]{String.valueOf(myTask.getId())});
     }
 
-    /**
-     * Метод для удаления всей БД.
-     */
     public void clearDataBase() {
-        db = this.getWritableDatabase();
-        db.delete(MyConstants.TABLE_NAME , null, null);
+        database = this.getWritableDatabase();
+        database.delete(MyConstants.TABLE_NAME , null, null);
     }
 
-    /**
-     * Метод для получения задания из БД.
-     */
-    public MyTask getTask(long id) {
-        db = this.getWritableDatabase();
+    public MyTask getTask(long ID) {
+        database = this.getWritableDatabase();
         Cursor cursor = null;
         MyTask myTask = new MyTask();
 
-        db.beginTransaction();
+        database.beginTransaction();
         try {
             // Этот запрос вернет 1 строку таблицы с указанным ID.
-            cursor = db.query(MyConstants.TABLE_NAME , null , "ID = ?", new String[] { String.valueOf(id) } , null , null , null);
+            cursor = database.query(MyConstants.TABLE_NAME , null , "ID = ?", new String[] { String.valueOf(ID) } , null , null , null);
             if (cursor !=null){
                 if (cursor.moveToFirst()){
                     do {
@@ -112,31 +94,30 @@ public class DBHelper extends SQLiteOpenHelper {
                         myTask.setTitle(cursor.getString(cursor.getColumnIndex(MyConstants.TITLE)));
                         myTask.setDescription(cursor.getString(cursor.getColumnIndex(MyConstants.DESCRIPTION)));
                         myTask.setDate(cursor.getLong(cursor.getColumnIndex(MyConstants.DATE)));
-                        myTask.setDone(cursor.getLong(cursor.getColumnIndex(MyConstants.DONE)));
+                        long status = cursor.getLong(cursor.getColumnIndex(MyConstants.DONE));
+                        if (status == 1) myTask.setDone(true);
+                        else myTask.setDone(false);
 
                     }while (cursor.moveToNext());
                 }
             }
         }finally {
-            db.endTransaction();
+            database.endTransaction();
             cursor.close();
         }
         return myTask;
     }
 
-    /**
-     * Метод для считывания всех заданий из БД.
-     */
     public List<MyTask> getAllTasks(){
 
-        db = this.getWritableDatabase();
+        database = this.getWritableDatabase();
         Cursor cursor = null;
         List<MyTask> taskList = new ArrayList<>();
 
-        db.beginTransaction();
+        database.beginTransaction();
         try {
             // Этот запрос вернет все строки таблицы.
-            cursor = db.query(MyConstants.TABLE_NAME , null , null , null , null , null , null);
+            cursor = database.query(MyConstants.TABLE_NAME , null , null , null , null , null , null);
             if (cursor !=null){
                 if (cursor.moveToFirst()){
                     do {
@@ -146,7 +127,9 @@ public class DBHelper extends SQLiteOpenHelper {
                         myTask.setTitle(cursor.getString(cursor.getColumnIndex(MyConstants.TITLE)));
                         myTask.setDescription(cursor.getString(cursor.getColumnIndex(MyConstants.DESCRIPTION)));
                         myTask.setDate(cursor.getLong(cursor.getColumnIndex(MyConstants.DATE)));
-                        myTask.setDone(cursor.getLong(cursor.getColumnIndex(MyConstants.DONE)));
+                        long status = cursor.getLong(cursor.getColumnIndex(MyConstants.DONE));
+                        if (status == 1) myTask.setDone(true);
+                        else myTask.setDone(false);
 
                         taskList.add(myTask);
 
@@ -154,7 +137,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 }
             }
         }finally {
-            db.endTransaction();
+            database.endTransaction();
             cursor.close();
         }
         return taskList;

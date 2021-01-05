@@ -12,7 +12,7 @@ import com.example.mycourseproject.R;
 
 public class PreviewActivity extends AppCompatActivity {
 
-    private SharedPreferences sharedPreferences;
+    private SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,15 +23,14 @@ public class PreviewActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                sharedPreferences = getSharedPreferences("password", MODE_PRIVATE);
+                preferences = getSharedPreferences("password", MODE_PRIVATE);
 
                 /*
                     Считываем пароль из Shared Preferences.
                     Если его нет, то открываем окно регистрации.
                     Если он есть, то открываем окно авторизации.
                  */
-
-                String password = decrypt(sharedPreferences.getString("password", ""));
+                String password = decrypt(preferences.getString("password", ""));
 
                 if (password.equals("")) {
                     PreviewActivity.this.startActivity(new Intent(PreviewActivity.this, RegistrationActivity.class));
@@ -52,9 +51,6 @@ public class PreviewActivity extends AppCompatActivity {
         // "Парализуем" кнопку "Назад", так как все необходимые кнопки у нас имеются.
     }
 
-    /**
-     * Метод для дешифрования пароля.
-     */
     private String decrypt(String password) {
         return new String(Base64.decode(password, Base64.DEFAULT));
     }

@@ -70,16 +70,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
         // Сохраняем текущий ID, так как он нам пригодится в дальнейшем.
         final long oldID = myTask.getId();
 
-        // Сделал свой формат даты - 3 буквы на месяц и 2 на число.
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd");
-
         // Напоняем наш ViewHolder контентом соответствующего задания.
         myViewHolder.tvTitle.setText(myTask.getTitle());
         myViewHolder.tvDescription.setText(myTask.getDescription());
-        myViewHolder.tvDate.setText(dateFormat.format(myTask.getDate()));
+        myViewHolder.tvDate.setText(new SimpleDateFormat("MMM dd").format(myTask.getDate()));
 
         // Активируем галку, если задание числится как выполненное.
-        if (myTask.getDone() == 1) {
+        if (myTask.isDone()) {
             myViewHolder.checkbox.toggle();
         }
 
@@ -89,7 +86,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
             public void onClick(View v) {
 
                 // Редактировать разрешено только невыполненные задания.
-                if (myTask.getDone() == 0) {
+                if (myTask.isDone()) {
 
                     // Открываем activity для редактирования задания.
                     // Не забываем впридачу положить ему ID задания.
@@ -105,31 +102,28 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.MyViewHolder> 
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 // Меняем статус задания в зависимости от статуса галки его ViewHolder'a.
-                long done;
                 if (isChecked) {
-                    done = 1;
+                    myTask.setDone(true);
                 } else {
-                    done = 0;
+                    myTask.setDone(false);
                 }
-                myTask.setDone(done);
 
                 /*
                     Редактируем ID задания в зависимости от его статуса
                     и обновляем данные в БД.
                     (Нужно для корректной сортировки заданий в списке)
                  */
-                if (done == 1) {
+                if (myTask.isDone()) {
                     myTask.setId(myTask.getId() + 1000000000000L);
                     helper.updateStatus(myTask, oldID);
 
-                } else if (done == 0) {
+                } else if (!myTask.isDone()) {
                     myTask.setId(myTask.getId() - 1000000000000L);
                     helper.updateStatus(myTask, oldID);
                 }
 
                 // Обновляем наше активити для отображения актуальных данных.
-                Intent intent = new Intent(context, MainActivity.class);
-                context.startActivity(intent);
+                context.startActivity(new Intent(context, MainActivity.class));
             }
         });
     }

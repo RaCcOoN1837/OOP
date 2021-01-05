@@ -18,7 +18,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private EditText etPasswordFirst, etPasswordSecond;
     private Button btnSignUp;
-    private SharedPreferences sharedPreferences;
+    private SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +42,8 @@ public class RegistrationActivity extends AppCompatActivity {
 
                 } else {
                     if (passwordFirst.equals(passwordSecond)) {
-                        sharedPreferences = getSharedPreferences("password", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        preferences = getSharedPreferences("password", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
                         editor.putString("password", encrypt(passwordFirst));
                         editor.commit();
                         startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
@@ -63,9 +63,6 @@ public class RegistrationActivity extends AppCompatActivity {
         // "Парализуем" кнопку "Назад", так как все необходимые кнопки у нас имеются.
     }
 
-    /**
-     * Метод для шифрования пароля.
-     */
     private String encrypt(String password) {
         return Base64.encodeToString(password.getBytes(), Base64.DEFAULT);
     }

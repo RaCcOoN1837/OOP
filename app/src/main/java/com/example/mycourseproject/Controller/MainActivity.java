@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
 
     private List<MyTask> list = new ArrayList<>();
     private DBHelper helper;
-    private Context context;
 
     // Инифиализируем наши компоненты.
     private LottieAnimationView btnAddTask; // Анимированная чудо-кнопка.
@@ -39,14 +38,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main); // Подгружаем главный экран.
 
-        context = this;
-        helper = new DBHelper(this);
-
         // Связываем наши компоненты с XML файлом.
         this.btnAddTask = findViewById(R.id.STARTbtnAddTask);
         this.recyclerView = findViewById(R.id.STARTtasks);
 
-        this.taskAdapter = new TaskAdapter(context, helper.getAllTasks()); // Создаем адаптер.
+        this.helper = new DBHelper(this);
+        this.taskAdapter = new TaskAdapter(this, helper.getAllTasks()); // Создаем адаптер.
         // Это дает определенный выигрыш в скорости разворачивания списка.
         this.recyclerView.setHasFixedSize(true);
         // Задаем раскладчик - в данном случае - по вертикали.
@@ -57,8 +54,7 @@ public class MainActivity extends AppCompatActivity {
         btnAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this.getApplicationContext(), NewTaskActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(MainActivity.this.getApplicationContext(), NewTaskActivity.class));
             }
         });
 

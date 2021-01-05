@@ -21,9 +21,9 @@ public class LoginActivity extends AppCompatActivity {
     private AlertDialog.Builder builder;
     private AlertDialog dialog;
     private TextView tvWarning;
-    private EditText passwordField;
-    private Button loginButton, resetButton, okButton, cancelButton;
-    private SharedPreferences sharedPreferences;
+    private EditText tvPassword;
+    private Button btnLogIn, btnResetPassword, btnOK, btnCancel;
+    private SharedPreferences preferences;
     private DBHelper helper;
 
     @Override
@@ -31,20 +31,19 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        passwordField = findViewById(R.id.LOGetpassword);
-        loginButton = findViewById(R.id.LOGbtnsugnin);
-        resetButton = findViewById(R.id.LOGbtnresetpassword);
+        tvPassword = findViewById(R.id.LOGetpassword);
+        btnLogIn = findViewById(R.id.LOGbtnsugnin);
+        btnResetPassword = findViewById(R.id.LOGbtnresetpassword);
         helper = new DBHelper(this);
 
         // Получаем переданный пароль.
-        Intent intent = getIntent();
-        final String validPassword = intent.getStringExtra("password");
+        final String validPassword = getIntent().getStringExtra("password");
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String password = passwordField.getText().toString();
+                String password = tvPassword.getText().toString();
                 if (password.equals(validPassword)) {
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
 
@@ -56,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        resetButton.setOnClickListener(new View.OnClickListener() {
+        btnResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 createNewContactDialog(
@@ -67,16 +66,13 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * Метод для отображения окна с предупреждением.
-     */
     public void createNewContactDialog(String warningText) {
         builder = new AlertDialog.Builder(this);
         final View warningWindow = getLayoutInflater().inflate(R.layout.reset_warning, null);
 
         tvWarning = warningWindow.findViewById(R.id.RESETtv);
-        okButton = warningWindow.findViewById(R.id.RESETbtnOK);
-        cancelButton = warningWindow.findViewById(R.id.RESETbtnCancel);
+        btnOK = warningWindow.findViewById(R.id.RESETbtnOK);
+        btnCancel = warningWindow.findViewById(R.id.RESETbtnCancel);
 
         // Устанавливаем текст предупреждения.
         tvWarning.setText(warningText);
@@ -85,11 +81,11 @@ public class LoginActivity extends AppCompatActivity {
         dialog = builder.create();
         dialog.show();
 
-        okButton.setOnClickListener(new View.OnClickListener() {
+        btnOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sharedPreferences = getSharedPreferences("password", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
+                preferences = getSharedPreferences("password", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
 
                 // Удаляем существующий пароль.
                 editor.clear();
@@ -104,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        cancelButton.setOnClickListener(new View.OnClickListener() {
+        btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();

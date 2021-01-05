@@ -32,15 +32,11 @@ public class EditTaskActivity extends AppCompatActivity implements DatePickerDia
 
     private long currentDate;
     private DBHelper helper;
-    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_task);
-
-        context = this;
-        helper = new DBHelper(this);
 
         // Связываем наши компоненты с XML файлом.
         etTitle = findViewById(R.id.EDITetTitle);
@@ -50,14 +46,13 @@ public class EditTaskActivity extends AppCompatActivity implements DatePickerDia
         btnDelete = findViewById(R.id.EDITbtnDelete);
         btnCancel = findViewById(R.id.EDITbtnCancel);
 
+        helper = new DBHelper(this);
+
         // Получаем ID выбраного задания.
-        long currentID = getIntent().getLongExtra("id", 0);
+        final long currentID = getIntent().getLongExtra("id", 0);
 
         // Получаем текущее задание по его ID.
         final MyTask myTask = helper.getTask(currentID);
-
-        // Сохраняем текущий ID, так как он нам пригодится в дальнейшем.
-        final long oldID = myTask.getId();
 
         // Отображаем текущие параметры задания в полях для редактирования.
         etTitle.setText(myTask.getTitle());
@@ -105,12 +100,11 @@ public class EditTaskActivity extends AppCompatActivity implements DatePickerDia
 
                 String newTitle = etTitle.getText().toString();
                 String newDescription = etDescription.getText().toString();
+                long newDate = currentDate;
+                long newId = newDate;
 
                 // Проверка на пустые поля.
                 if ((!newTitle.equals("")) && (currentDate != 0)) {
-
-                    long newDate = currentDate;
-                    long newId = newDate;
 
                     // Изменяем задание.
                     myTask.setTitle(newTitle);
@@ -119,7 +113,7 @@ public class EditTaskActivity extends AppCompatActivity implements DatePickerDia
                     myTask.setId(newId);
 
                     // Обновляем задание в БД.
-                    helper.updateTask(myTask, oldID);
+                    helper.updateTask(myTask, currentID);
 
                     // Возвращаемся на главный экран.
                     startActivity(new Intent(EditTaskActivity.this, MainActivity.class));
