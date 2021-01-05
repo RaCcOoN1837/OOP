@@ -1,7 +1,6 @@
 package com.example.mycourseproject.Model.Storage;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 
 import com.example.mycourseproject.Model.MyTask;
 
