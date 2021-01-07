@@ -88,13 +88,22 @@ public class MyTask implements Comparable<MyTask> {
     }
 
     @Override
-    public int compareTo(MyTask o) {
-        if (this.getId() > o.getId()) {
+    public int compareTo(MyTask anotherTask) {
+        if (this.getId() > anotherTask.getId()) {
             return 1;
-        } else if (this.getId() < o.getId()) {
+        } else if (this.getId() < anotherTask.getId()) {
             return -1;
         } else {
             return 0;
         }
+
+//        Integer statusThis = (this.isDone())? 1 : 0;
+//        Integer statusAnother = (anotherTask.isDone())? 1 : 0;
+//        Long dateThis = this.getDate();
+//        Long dateAnother = anotherTask.getDate();
+//
+//        int result = statusThis.compareTo(statusAnother);
+//        if (result == 0) result = dateThis.compareTo(dateAnother);
+//        return result;
     }
 }
